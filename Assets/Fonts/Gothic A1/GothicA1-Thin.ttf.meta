@@ -1,0 +1,26 @@
+fileFormatVersion: 2
+guid: f5de51bbba006a7409d6e5565c71c904
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Gothic A1
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: c477eca6f4ded8b4ba3b65cfadcc7b2b, type: 3}
+  - {fileID: 12800000, guid: 34359d804e43f6847b31d47e83c9a57b, type: 3}
+  - {fileID: 12800000, guid: 2020e0a370144064aab80bc0c87d8c92, type: 3}
+  - {fileID: 12800000, guid: 648b59521c8e065498f4ed5af54460d2, type: 3}
+  - {fileID: 12800000, guid: 139a6fac9511afe48997196a4720a9dd, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
