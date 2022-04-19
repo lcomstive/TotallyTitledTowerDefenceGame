@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Buildable", menuName = "Custom/Buildable", order = 5)]
+[CreateAssetMenu(fileName = "Buildable", menuName = "Custom/Buildable")]
 public class BuildableData : ScriptableObject
 {
 	public string DisplayName = "Buildable";

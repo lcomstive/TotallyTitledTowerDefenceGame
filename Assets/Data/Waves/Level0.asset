@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d252d1e750661e4ab438d3404d237c2, type: 3}
+  m_Name: Level0
+  m_EditorClassIdentifier: 
+  MaxRounds: 6
+  MinEnemiesAtOnce: 5
+  MaxEnemiesAtOnce: 30
+  EnemySpeedMultiplier: 5
+  MinEnemySpawnInterval: 0.1
+  DifficultyCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.90758365
+      value: 0.34366906
+      inSlope: 0.62023985
+      outSlope: 0.62023985
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.046569932
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 13.480337
+      outSlope: 13.480337
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.026371382
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  InitialRoundSpawnSpeed: 1
+  PotentialEnemies:
+  - Health: 10
+    Prefab: {fileID: 5853581721551443068, guid: 71937abea99a6b04c86760441de38844,
+      type: 3}
+    Difficulty: 0
+  - Health: 25
+    Prefab: {fileID: 533031535371747847, guid: 33ac5bd6d5794024a95ef9136004d3ee, type: 3}
+    Difficulty: 5

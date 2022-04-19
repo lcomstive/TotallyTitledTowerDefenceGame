@@ -7,6 +7,12 @@ public class TraversePath : MonoBehaviour
 	[SerializeField] private float m_Speed = 10.0f;
 	[SerializeField] private float m_RotateSpeed = 10.0f;
 
+	public float Speed
+	{
+		get => m_Speed;
+		set => m_Speed = value;
+	}
+
     private PathNode m_TargetNode;
 
 	// Moving between nodes
@@ -68,10 +74,12 @@ public class TraversePath : MonoBehaviour
 		if(potentialNodes.Count > 0)
 			m_TargetNode = potentialNodes[Random.Range(0, potentialNodes.Count)];
 		else
+		{
 			m_TargetNode = null;
+			FinishedPath?.Invoke();
+		}
 
 		m_StartPos = transform.position;
-		m_LerpPos = 0;
 	}
 
 	private PathNode GetClosestParentNode()
@@ -94,4 +102,7 @@ public class TraversePath : MonoBehaviour
 
 		return closest;
 	}
+
+	public delegate void OnFinishedPath();
+	public event OnFinishedPath FinishedPath;
 }
