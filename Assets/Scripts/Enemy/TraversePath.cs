@@ -43,8 +43,12 @@ public class TraversePath : MonoBehaviour
 		transform.rotation =
 			Quaternion.Slerp(transform.rotation, lookAtRot, Time.deltaTime * m_RotateSpeed);
 
-		// Check if at target
-		if(Vector3.Distance(transform.position, m_TargetNode.Position) < 0.1f)
+		// Check if overshot
+		if((Vector3.Distance(m_StartPos, transform.position) >=
+			Vector3.Distance(m_StartPos, m_TargetNode.Position)) ||
+			// Check if at target
+			Vector3.Distance(transform.position, m_TargetNode.Position) < 0.1f
+			)
 			CalculateNextNode();
 	}
 

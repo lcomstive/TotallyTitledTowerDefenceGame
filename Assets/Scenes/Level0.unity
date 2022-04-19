@@ -801,7 +801,7 @@ MonoBehaviour:
     BranchingPath: []
     JoinToParentPath: 0
   - PathID: 0
-    Position: {x: 2, y: 1, z: 4.080085}
+    Position: {x: 2, y: 1, z: 4}
     BranchingPath:
     - PathID: 0
       Position: {x: 4, y: 1, z: 4}
@@ -5762,6 +5762,8 @@ MonoBehaviour:
     type: 3}
   m_PlacementSnapping: 1
   m_State: 0
+  m_IgnoreSelectTimeAfterPlaced: 0.5
+  m_PlacementTimer: 0
 --- !u!114 &726016153
 MonoBehaviour:
   m_ObjectHideFlags: 0

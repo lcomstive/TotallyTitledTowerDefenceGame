@@ -15,7 +15,7 @@ MonoBehaviour:
   MaxRounds: 6
   MinEnemiesAtOnce: 5
   MaxEnemiesAtOnce: 30
-  EnemySpeedMultiplier: 5
+  EnemySpeedMultiplier: 1
   MinEnemySpawnInterval: 0.1
   DifficultyCurve:
     serializedVersion: 2

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -40,9 +40,9 @@ public class WaveSpawner : MonoBehaviour
 
 	public void NextWave()
 	{
-		if (!IsWaveFinished)
+		if (!IsWaveFinished || !Instance)
 			return;
-		Debug.Log($"Starting round {Round + 1}/{MaxRounds}...");
+		Debug.Log($"Starting round {Round + 1}/{MaxRounds + 1}...");
 		StartCoroutine(SpawnWave());
 	}
 

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 
@@ -17,6 +17,16 @@ public class BuildableManager : MonoBehaviour
 	[SerializeField] private bool m_PlacementSnapping = true;
 
 	public BuildState m_State;
+
+	/// <summary>
+	/// Time, in seconds, to ignore select/click input after placing a building.
+	/// This is to prevent immediately showing building info,
+	///		unless the player holds down the input
+	/// </summary>
+	[Tooltip("Time, in seconds, to ignore select/click input after placing a building")]
+	[SerializeField] private float m_IgnoreSelectTimeAfterPlaced = 0.15f;
+
+	private float m_PlacementTimer = 0.0f; // Seconds since last placed a buildings
 
 	// Cached variables
 	private EventSystem m_EventSystem;
@@ -60,6 +70,10 @@ public class BuildableManager : MonoBehaviour
 			return;
 		}
 
+		if(m_PlacementTimer < m_IgnoreSelectTimeAfterPlaced)
+			m_PlacementTimer += Time.deltaTime;
+		bool canSelect = m_PlacementTimer >= m_IgnoreSelectTimeAfterPlaced;
+
 		Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.magenta, 0.1f);
 
 		switch(State)
@@ -75,7 +89,7 @@ public class BuildableManager : MonoBehaviour
 			default:
 			case BuildState.None:
 				{
-					if(!selectPressed)
+					if(!selectPressed || !canSelect)
 						break; // No mouse input, don't do anything
 
 					// Select building to view info
@@ -187,6 +201,7 @@ public class BuildableManager : MonoBehaviour
 			PlayerData.Currency -= SelectedBuildable.Cost;
 
 			// Reset state
+			m_PlacementTimer = 0;
 			DeselectBuilding();
 		}
 	}
