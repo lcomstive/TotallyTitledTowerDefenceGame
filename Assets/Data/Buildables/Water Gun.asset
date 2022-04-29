@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a395ac5fb7d16c44786a0e90979f4845, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a5def7ba1355804bbe9670f061ae0e7, type: 3}
   m_Name: Water Gun
   m_EditorClassIdentifier: 
   DisplayName: Water Gun
@@ -17,13 +17,20 @@ MonoBehaviour:
   PreviewPrefab: {fileID: 5929073820651805556, guid: 85420c19514799a4abb393f908689d2d,
     type: 3}
   Cost:
-    m_Value: 10
+    m_Value: 15
     m_Unit: 0
   SellValue:
-    m_Value: 7
+    m_Value: 12
     m_Unit: 0
-  Description: Sprays water, nature's deterrent
-  VisionRadius: 3
+  Description: This is a buildable item. Try placing me!
+  VisionRadius: 7
   ValidPlacementTags:
   - Terrain
-  SpawnOffset: {x: 0, y: 0.525, z: 0}
+  SpawnOffset: {x: 0, y: 0.15, z: 0}
+  Damage: 3
+  BulletPrefab: {fileID: 4810917858265246603, guid: 77ad7b2daa94cf1448b95747df5a4619,
+    type: 3}
+  FireRate: 5
+  BulletVelocity: 3
+  RotationSpeed: 10
+  RestrictRotation: 0

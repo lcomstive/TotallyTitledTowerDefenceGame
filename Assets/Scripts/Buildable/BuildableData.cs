@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Buildable", menuName = "Custom/Buildable")]
+[CreateAssetMenu(fileName = "Buildable", menuName = "Custom/Buildable/Generic")]
 public class BuildableData : ScriptableObject
 {
 	public string DisplayName = "Buildable";
@@ -22,4 +22,9 @@ public class BuildableData : ScriptableObject
 	{
 		Cost.Validate();
 	}
+}
+
+public abstract class DamageableBuildableData : BuildableData
+{
+	public float Damage = 1.0f;
 }

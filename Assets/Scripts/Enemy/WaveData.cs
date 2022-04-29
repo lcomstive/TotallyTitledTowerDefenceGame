@@ -10,15 +10,21 @@ public struct WaveEnemy
 
 	[Tooltip("Value representing difficulty of enemy. 0 is not difficult, 99 is extremely difficult")]
 	public uint Difficulty;
+
+	public Currency Reward;
 }
 
 [CreateAssetMenu(fileName = "Wave", menuName = "Custom/Wave")]
 public class WaveData : ScriptableObject
 {
+	public int PlayerLives = 50;
+	public Currency PlayerStartingCurrency = new Currency(100);
+
 	public int MaxRounds = 10;
 	public int MinEnemiesAtOnce = 5;
 	public int MaxEnemiesAtOnce = 30;
-	public float EnemySpeedMultiplier = 1.0f;
+	public float MaxEnemySpeedMultiplier = 10.0f;
+	public float InitialEnemySpeedMultiplier = 1.0f;
 	public float MinEnemySpawnInterval = 0.1f;
 	public AnimationCurve DifficultyCurve;
 

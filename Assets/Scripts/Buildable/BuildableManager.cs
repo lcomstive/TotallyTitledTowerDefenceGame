@@ -63,7 +63,7 @@ public class BuildableManager : MonoBehaviour
 
 		if(m_EventSystem.IsPointerOverGameObject()) // Pointer is over UI, don't update
 			return;
-		if (!Physics.Raycast(ray, out RaycastHit hit, 1000.0f)) // Check if hit any world object
+		if (!Physics.Raycast(ray, out RaycastHit hit, 1000.0f, m_RayMask, QueryTriggerInteraction.Ignore)) // Check if hit any world object
 		{
 			if(selectPressed)
 				DeselectBuilding();

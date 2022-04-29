@@ -13,6 +13,9 @@ public class TraversePath : MonoBehaviour
 		set => m_Speed = value;
 	}
 
+	public float DistanceFromEndOfPath { get; private set; }
+	public float DistanceFromStartOfPath { get; private set; }
+
     private PathNode m_TargetNode;
 
 	// Moving between nodes
@@ -33,8 +36,13 @@ public class TraversePath : MonoBehaviour
 			return;
 
 		// Move towards target
+		float distanceTravelled = Time.deltaTime * m_Speed;
+
 		Vector3 direction = (m_TargetNode.Position - m_StartPos).normalized;
-		transform.position += direction * Time.deltaTime * m_Speed;
+		transform.position += direction * distanceTravelled;
+		
+		DistanceFromStartOfPath += distanceTravelled;
+		DistanceFromEndOfPath -= distanceTravelled;
 
 		// Rotate towards target
 		Quaternion lookAtRot =
@@ -58,6 +66,9 @@ public class TraversePath : MonoBehaviour
 		if(path == null || path.Count == 0)
 			return; // Something went wrong
 
+		if(m_TargetNode == Path.Instance.PathNodes[0])
+			DistanceFromStartOfPath = 0; // Got to start of path
+
 		List<PathNode> potentialNodes = new List<PathNode>();
 		for(int i = 0; i < path.Count; i++)
 		{
@@ -76,7 +87,19 @@ public class TraversePath : MonoBehaviour
 
 		// Choose randomly from potential paths
 		if(potentialNodes.Count > 0)
+		{
 			m_TargetNode = potentialNodes[Random.Range(0, potentialNodes.Count)];
+
+			/*
+			// Traverse path to get distance from goal
+			PathNode currentNode = m_TargetNode;
+			DistanceFromEndOfPath = 0;
+			while(currentNode != null)
+			{
+				// DistanceFromEndOfPath += currentNode.
+			}
+			*/
+		}
 		else
 		{
 			m_TargetNode = null;

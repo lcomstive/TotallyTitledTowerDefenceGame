@@ -7,6 +7,7 @@ TagManager:
   - Path
   - Terrain
   - Buildable
+  - Enemy
   layers:
   - Default
   - TransparentFX

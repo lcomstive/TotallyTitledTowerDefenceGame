@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyData : MonoBehaviour
@@ -14,7 +12,7 @@ public class EnemyData : MonoBehaviour
 	private void OnDestroy()
 	{
 		if(m_Health >= 0) // Most likely deleted in editor
-			Destroyed(null);
+			Destroyed?.Invoke(null);
 	}
 
 	public void SetData(WaveEnemy data)
@@ -23,13 +21,28 @@ public class EnemyData : MonoBehaviour
 		m_Health = m_Data.Health;
 	}
 
-	public void ApplyDamage(float damage, BuildableInfo info)
+	public void ApplyDamage(float damage)
 	{
 		m_Health -= damage;
 
 		if(m_Health <= 0)
 		{
-			Destroyed(info);
+			Destroyed?.Invoke(null);
+			Destroy(gameObject);
+		}
+	}
+	
+	public void ApplyDamage(BuildableInfo buildable)
+	{
+		DamageableBuildableData data = buildable?.Data as DamageableBuildableData;
+		if(!buildable || !data)
+			return;
+
+		m_Health -= data.Damage;
+
+		if(m_Health <= 0)
+		{
+			Destroyed?.Invoke(buildable);
 			Destroy(gameObject);
 		}
 	}

@@ -10,6 +10,8 @@ public class BuildableInfo : MonoBehaviour
 	[SerializeField] private DecalProjector m_RadiusPreviewProjector;
 	[SerializeField] private bool m_ShowRadius = false;
 
+	public int KillCount = 0;
+
 	private void Awake() => ShowRadius(m_ShowRadius);
 
 #if UNITY_EDITOR

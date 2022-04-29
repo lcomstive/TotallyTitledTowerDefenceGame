@@ -26,6 +26,9 @@ public class WaveSpawner : MonoBehaviour
 		else
 			Instance = this;
 
+		BuildableManager.PlayerData.Lives = m_WaveData.PlayerLives;
+		BuildableManager.PlayerData.Currency.Copy(m_WaveData.PlayerStartingCurrency);
+
 #if UNITY_EDITOR
 		Round = m_StartingRound;
 #endif
@@ -61,7 +64,9 @@ public class WaveSpawner : MonoBehaviour
 		Debug.Log($"Difficulty: {Mathf.RoundToInt(difficulty * 100)}% | Enemies spawning: {spawnCount}");
 		for (int i = 0; i < spawnCount; i++)
 		{
-			WaveEnemy selectedEnemy = m_WaveData.PotentialEnemies[0]; // TODO: Base this on difficulties of each enemy and difficulty curve
+			// TODO: Base this on difficulties of each enemy and difficulty curve
+			// WaveEnemy selectedEnemy = m_WaveData.PotentialEnemies[0];
+			WaveEnemy selectedEnemy = m_WaveData.PotentialEnemies[Random.Range(0, m_WaveData.PotentialEnemies.Count)];
 
 			GameObject prefab = selectedEnemy.Prefab;
 			GameObject go = Instantiate(prefab, spawnLocation, prefab.transform.rotation);
@@ -71,8 +76,14 @@ public class WaveSpawner : MonoBehaviour
 				enemyData = go.AddComponent<EnemyData>();
 			enemyData.SetData(selectedEnemy);
 
-			enemyData.Destroyed += (_) =>
+			enemyData.Destroyed += (info) =>
 			{
+				if(info)
+					info.KillCount++;
+
+				if(BuildableManager.PlayerData)
+					BuildableManager.PlayerData.Currency += enemyData.Data.Reward;
+
 				m_SpawnedEnemies--;
 				if (m_SpawnedEnemies <= 0)
 					RunWaveFinished();
@@ -81,8 +92,14 @@ public class WaveSpawner : MonoBehaviour
 			TraversePath traversePath = go.GetComponentInChildren<TraversePath>();
 			if (traversePath)
 			{
-				traversePath.Speed *= (1.0f + difficulty) * m_WaveData.EnemySpeedMultiplier;
-				traversePath.FinishedPath += () => enemyData.ApplyDamage(float.MaxValue, null);
+				traversePath.Speed *= (1.0f + difficulty) * m_WaveData.InitialEnemySpeedMultiplier;
+				traversePath.Speed = Mathf.Clamp(traversePath.Speed, 0.01f, m_WaveData.MaxEnemySpeedMultiplier);
+
+				traversePath.FinishedPath += () =>
+				{
+					enemyData.ApplyDamage(float.MaxValue);
+					BuildableManager.PlayerData.Lives--;
+				};
 			}
 
 			m_SpawnedEnemies++;
@@ -97,13 +114,16 @@ public class WaveSpawner : MonoBehaviour
 			RunWaveFinished(); // No enemies spawned?
 	}
 
-	private int CalculateEnemiesToSpawn(float difficulty) =>
-		m_WaveData ?
+	private int CalculateEnemiesToSpawn(float difficulty)
+	{
+		int enemies = m_WaveData ?
 			Mathf.RoundToInt(
 				difficulty * (m_WaveData.MaxEnemiesAtOnce - m_WaveData.MinEnemiesAtOnce) +
 				m_WaveData.MinEnemiesAtOnce
 				)
 		: 0;
+		return Mathf.Clamp(enemies, 0, m_WaveData.MaxEnemiesAtOnce);
+	}
 
 	private void RunWaveFinished()
 	{

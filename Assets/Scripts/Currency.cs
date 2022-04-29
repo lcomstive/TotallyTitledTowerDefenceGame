@@ -17,18 +17,18 @@ public enum CurrencyUnit : byte
 /// Negative currency is automatically converted to the lower unit; if there is no unit then the value is set to 0
 /// </summary>
 [Serializable]
-public class Currency
+public struct Currency
 {
-	[SerializeField] private int m_Value = 0;
-	[SerializeField] private CurrencyUnit m_Unit = CurrencyUnit.None;
+	[SerializeField] private int m_Value;
+	[SerializeField] private CurrencyUnit m_Unit;
 
 	private static readonly Dictionary<CurrencyUnit, char> m_UnitChars = new Dictionary<CurrencyUnit, char>()
 	{
-		{ CurrencyUnit.None, ' ' },
-		{ CurrencyUnit.Billion, 'B' },
-		{ CurrencyUnit.Million, 'M' },
-		{ CurrencyUnit.Thousand, 'K' },
-		{ CurrencyUnit.Trillion, 'T' },
+		{ CurrencyUnit.None,		' ' },
+		{ CurrencyUnit.Billion,		'B' },
+		{ CurrencyUnit.Million,		'M' },
+		{ CurrencyUnit.Thousand,	'K' },
+		{ CurrencyUnit.Trillion,	'T' },
 	};
 
 	public int Value
@@ -58,9 +58,18 @@ public class Currency
 		}
 	}
 
-	public Currency(int value = 0)
+	public Currency(int value = 0) : this()
 	{
 		m_Value = value;
+		m_Unit = CurrencyUnit.None;
+
+		Validate();
+	}
+
+	public void Copy(Currency other)
+	{
+		m_Value = other.Value;
+		m_Unit = other.Unit;
 		Validate();
 	}
 
@@ -92,6 +101,7 @@ public class Currency
 
 	public override int GetHashCode() => ((int)this).GetHashCode();
 	public override bool Equals(object obj) => obj.GetType().Equals(typeof(Currency)) && (int)(Currency)obj == (int)this;
+	public override string ToString() => DisplayValue();
 
 	public delegate void OnValueChanged();
 	public event OnValueChanged ValueChanged;
