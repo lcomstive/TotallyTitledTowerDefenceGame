@@ -39,7 +39,7 @@ public class BuildableInfoPanel : MonoBehaviour
 		m_RectTransform.position = m_Camera.WorldToScreenPoint(m_CurrentInfo.transform.position);
 
 		m_Title.text = m_CurrentInfo.Data.DisplayName;
-		m_SellCostText.text = "$" + m_CurrentInfo.Data.SellValue.DisplayValue();
+		m_SellCostText.text = $"${m_CurrentInfo.Data.SellValue.DisplayValue()}";
 		m_SellButton .onClick.AddListener(() => BuildableManager.RefundSelected());
 		m_CloseButton.onClick.AddListener(() => BuildableManager.DeselectBuilding());
 

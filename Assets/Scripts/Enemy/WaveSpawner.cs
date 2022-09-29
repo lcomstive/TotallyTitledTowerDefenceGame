@@ -1,12 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
+using System.Threading.Tasks;
 
 public class WaveSpawner : MonoBehaviour
 {
 	[SerializeField] private WaveData m_WaveData;
+	[SerializeField] private PlayerData m_PlayerData;
+
+	[SerializeField, Tooltip("Time between starting wave and spawning enemies")]
+	private float m_StartDelay = 2.0f;
+
+	[SerializeField] private UnityEvent m_WaveStarted, m_WaveFinished;
 
 #if UNITY_EDITOR
+	[Header("Debug")]
 	[SerializeField] private int m_StartingRound = 0;
 #endif
 
@@ -29,10 +38,20 @@ public class WaveSpawner : MonoBehaviour
 		BuildableManager.PlayerData.Lives = m_WaveData.PlayerLives;
 		BuildableManager.PlayerData.Currency.Copy(m_WaveData.PlayerStartingCurrency);
 
+		m_PlayerData.GameState = PlayState.Building;
+
 #if UNITY_EDITOR
 		Round = m_StartingRound;
 #endif
-		NextWave();
+
+		m_PlayerData.OnStateChanged += OnGameStateChanged;
+	}
+
+	private void OnGameStateChanged(PlayState state)
+	{
+		if (state != PlayState.Building &&
+			Instance && IsWaveFinished)
+			NextWave();
 	}
 
 	private void OnDestroy()
@@ -41,11 +60,16 @@ public class WaveSpawner : MonoBehaviour
 			Instance = null;
 	}
 
-	public void NextWave()
+	public async void NextWave()
 	{
 		if (!IsWaveFinished || !Instance)
 			return;
 		Debug.Log($"Starting round {Round + 1}/{MaxRounds + 1}...");
+		m_WaveStarted?.Invoke();
+
+		if (m_StartDelay > 0)
+			await Task.Delay((int)(m_StartDelay * 1000));
+
 		StartCoroutine(SpawnWave());
 	}
 
@@ -128,11 +152,16 @@ public class WaveSpawner : MonoBehaviour
 	private void RunWaveFinished()
 	{
 		m_SpawnedEnemies = 0;
-		WaveFinished?.Invoke();
-		Round++;
 
-		// TESTING
-		NextWave();
+		// C# Event
+		WaveFinished?.Invoke();
+
+		// Unity Event
+		m_WaveFinished?.Invoke();
+
+		m_PlayerData.GameState = PlayState.Building;
+
+		Round++;
 	}
 
 	public delegate void OnWaveFinished();

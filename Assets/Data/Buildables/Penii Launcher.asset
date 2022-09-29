@@ -31,6 +31,6 @@ MonoBehaviour:
   BulletPrefab: {fileID: 4664053120533762950, guid: 7fcfd47428a271847bd20968d7572a63,
     type: 3}
   FireRate: 3
-  BulletVelocity: 3
+  BulletVelocity: 5
   RotationSpeed: 2.5
   RestrictRotation: 0
