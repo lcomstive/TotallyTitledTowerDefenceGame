@@ -4,6 +4,22 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 using System.Threading.Tasks;
 
+public enum WaveState
+{
+	None,
+	Spawning,
+
+	/// <summary>
+	/// Waiting for all enemies to die so next round can begin
+	/// </summary>
+	Waiting,
+
+	/// <summary>
+	/// Delay between rounds when autostart is enabled
+	/// </summary>
+	AutoStartDelay
+}
+
 public class WaveSpawner : MonoBehaviour
 {
 	[SerializeField] private WaveData m_WaveData;
@@ -33,12 +49,14 @@ public class WaveSpawner : MonoBehaviour
 	public int Round { get; private set; } = 0;
 	public int MaxRounds => m_WaveData?.MaxRounds ?? -1;
 	public WaveData WaveData => m_WaveData;
-	public bool IsWaveFinished { get; private set; } = true;
+	public bool IsWaveFinished => m_State == WaveState.None;
 
 	public static WaveSpawner Instance { get; private set; }
 
+	[SerializeField]
 	private int m_SpawnedEnemies = 0;
 	private PlayState m_PreviousPlayState;
+	private WaveState m_State = WaveState.None;
 
 	private void Start()
 	{
@@ -57,12 +75,14 @@ public class WaveSpawner : MonoBehaviour
 #endif
 
 		m_PlayerData.OnStateChanged += OnGameStateChanged;
+
+		StartCoroutine(CheckRoundFinished());
 	}
 
-	private void OnGameStateChanged(PlayState state)
+	private void OnGameStateChanged(PlayState oldState, PlayState newState)
 	{
-		if (state != PlayState.Building &&
-			Instance && IsWaveFinished)
+		if (oldState == PlayState.Building &&
+			newState != PlayState.Building)
 			NextWave();
 	}
 
@@ -72,17 +92,20 @@ public class WaveSpawner : MonoBehaviour
 			Instance = null;
 	}
 
-	public async void NextWave()
+	private async void NextWave()
 	{
 		if (!IsWaveFinished || !Instance)
 			return;
-		IsWaveFinished = false;
 
 		Debug.Log($"Starting round {Round + 1}/{MaxRounds + 1}...");
 		m_WaveStarted?.Invoke();
 
 		if (m_StartDelay > 0)
 			await Task.Delay((int)(m_StartDelay * 1000));
+
+		// Update gamestate
+		if(m_PlayerData.GameState == PlayState.Building)
+			m_PlayerData.GameState = m_PreviousPlayState;
 
 		StartCoroutine(SpawnWave());
 	}
@@ -92,7 +115,8 @@ public class WaveSpawner : MonoBehaviour
 		if (!Path.Instance || Path.Instance.PathNodes == null || Path.Instance.PathNodes.Count == 0)
 			yield break; // No path to spawn on
 
-		m_SpawnedEnemies = 0;
+		m_State = WaveState.Spawning;
+
 		float roundProgress = Round / (float)MaxRounds;
 		float difficulty = m_WaveData.DifficultyCurve.Evaluate(Round == 0 ? 0.0f : roundProgress);
 		if(roundProgress > 1.0f)
@@ -122,9 +146,8 @@ public class WaveSpawner : MonoBehaviour
 				if(BuildableManager.PlayerData)
 					BuildableManager.PlayerData.Currency += enemyData.Data.Reward;
 
-				m_SpawnedEnemies--;
-				if (m_SpawnedEnemies <= 0)
-					RunWaveFinished();
+				if(m_SpawnedEnemies > 0)
+					m_SpawnedEnemies--;
 			};
 
 			TraversePath traversePath = go.GetComponentInChildren<TraversePath>();
@@ -151,9 +174,7 @@ public class WaveSpawner : MonoBehaviour
 		}
 
 		m_SpawningFinished?.Invoke();
-
-		if(m_SpawnedEnemies <= 0)
-			RunWaveFinished(); // No enemies spawned?
+		m_State = WaveState.Waiting;
 	}
 
 	private int CalculateEnemiesToSpawn(float difficulty)
@@ -163,11 +184,11 @@ public class WaveSpawner : MonoBehaviour
 				difficulty * (m_WaveData.MaxEnemiesAtOnce - m_WaveData.MinEnemiesAtOnce) +
 				m_WaveData.MinEnemiesAtOnce
 				)
-		: 0;
+			: 0;
 		return Mathf.Clamp(enemies, 0, m_WaveData.MaxEnemiesAtOnce);
 	}
 
-	private async void RunWaveFinished()
+	private IEnumerator RunWaveFinished()
 	{
 		m_SpawnedEnemies = 0;
 
@@ -178,17 +199,38 @@ public class WaveSpawner : MonoBehaviour
 		m_WaveFinished?.Invoke();
 
 		m_PreviousPlayState = m_PlayerData.GameState;
-		m_PlayerData.GameState = PlayState.Building;
+		// m_PlayerData.GameState = PlayState.Building;
 
 		Round++;
-		IsWaveFinished = true;
-		
-		if(m_Config && m_Config.AutoStartRounds)
+
+		if (m_Config && m_Config.AutoStartRounds)
 		{
-			await Task.Delay((int)(m_AutoStartDelay * 1000));
-			m_PlayerData.GameState = m_PreviousPlayState;
+			m_State = WaveState.AutoStartDelay;
+
+			yield return new WaitForSeconds(m_AutoStartDelay);
+
+			// Wave is finished after delay, so player cannot start
+			//	next round during delay. This will cause two+ rounds at once.
+			m_State = WaveState.None;
+
 			NextWave();
 		}
+		else
+		{
+			m_PlayerData.GameState = PlayState.Building;
+			m_State = WaveState.None;
+		}
+	}
+
+	private IEnumerator CheckRoundFinished()
+	{
+		if (m_SpawnedEnemies <= 0 &&
+			m_State == WaveState.Waiting)
+			StartCoroutine(RunWaveFinished());
+
+		yield return new WaitForSeconds(1.0f);
+
+		StartCoroutine(CheckRoundFinished());
 	}
 
 	public delegate void OnWaveFinished();

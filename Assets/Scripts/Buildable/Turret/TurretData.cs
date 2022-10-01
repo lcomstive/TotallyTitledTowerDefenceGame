@@ -1,11 +1,5 @@
 using UnityEngine;
 
-public enum TurretAimSetting
-{
-	First,
-	Closest
-}
-
 [CreateAssetMenu(fileName = "Turret", menuName = "Custom/Buildable/Turret")]
 public class TurretData : DamageableBuildableData
 {

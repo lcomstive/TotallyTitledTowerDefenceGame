@@ -42,10 +42,10 @@ public class PlayButton : MonoBehaviour
 		m_PlayerData.OnStateChanged += OnGameStateChanged;
 
 		// Set initial button state
-		OnGameStateChanged(m_PlayerData.GameState);
+		OnGameStateChanged(m_PlayerData.GameState, m_PlayerData.GameState);
 	}
 
-	private void OnGameStateChanged(PlayState value)
+	private void OnGameStateChanged(PlayState oldValue, PlayState value)
 	{
 		Color buttonColor = m_Button.image.color;
 		buttonColor.a = value == PlayState.Building ? m_BackgroundOpacityBuilding : m_BackgroundOpacityPlaying;

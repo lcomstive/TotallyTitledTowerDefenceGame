@@ -32,8 +32,9 @@ public class PlayerData : ScriptableObject
 	public PlayState GameState
 	{
 		get => m_PlayState;
-		set => OnStateChanged?.Invoke(m_PlayState = value);
+		set => OnStateChanged?.Invoke(m_PlayState, m_PlayState = value);
 	}
 
-	public event Action<PlayState> OnStateChanged;
+	public delegate void OnStateChangedDelegate(PlayState previous, PlayState newValue);
+	public event OnStateChangedDelegate OnStateChanged;
 }

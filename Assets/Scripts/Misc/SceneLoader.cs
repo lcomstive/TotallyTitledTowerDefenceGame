@@ -5,11 +5,13 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour
 {
 	[Tooltip("Called when this scene has been loaded")]
-	public UnityEvent OnSceneLoaded;
+	public UnityEvent SceneLoaded;
 
 	public void LoadScene(int index) => SceneManager.LoadScene(index);
 
 	public void Exit() => Application.Quit();
 
-	private void OnLevelWasLoaded(int _) => OnSceneLoaded?.Invoke();
+	private void Start() => SceneManager.sceneLoaded += OnSceneLoaded;
+
+	private void OnSceneLoaded(Scene _, LoadSceneMode __) => SceneLoaded?.Invoke();
 }

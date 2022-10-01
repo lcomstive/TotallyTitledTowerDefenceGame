@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Camera))]
 public class CameraController : MonoBehaviour
@@ -46,6 +47,11 @@ public class CameraController : MonoBehaviour
 	[SerializeField, Tooltip("Curve with horizontal axis as seconds, vertical as value between initial and \"initial gameplay position\"")]
 	private AnimationCurve m_GameplayPositionLerp;
 
+	[SerializeField]
+	private UnityEvent m_BeginStartup;
+	[SerializeField]
+	private UnityEvent m_FinishedStartup;
+
 	private Camera m_Camera;
 
 	// Values to lerp to
@@ -81,6 +87,7 @@ public class CameraController : MonoBehaviour
 			yield break;
 
 		m_EnablePlayerInput = false;
+		m_BeginStartup?.Invoke();
 
 		float time = 0.0f;
 		float maxTime = m_GameplayPositionLerp.keys[^1].time; // Get time at last keyframe
@@ -96,23 +103,25 @@ public class CameraController : MonoBehaviour
 
 		transform.position = endPos;
 		m_EnablePlayerInput = true;
+
+		m_FinishedStartup?.Invoke();
 	}
 
 	private void HandleInputs()
 	{
 		// Move
 		Vector2 moveInput = m_MoveCameraInput.action.ReadValue<Vector2>();
-		m_DesiredMove += transform.TransformDirection(new Vector3(moveInput.x, moveInput.y, 0)) * m_MoveSpeed * Time.deltaTime;
+		m_DesiredMove += transform.TransformDirection(new Vector3(moveInput.x, moveInput.y, 0)) * m_MoveSpeed * Time.unscaledDeltaTime;
 
 		// Zoom
 		m_DesiredZoom = Mathf.Clamp(
-			m_DesiredZoom + m_ZoomCameraInput.action.ReadValue<float>() * m_ZoomSpeed * Time.deltaTime,
+			m_DesiredZoom + m_ZoomCameraInput.action.ReadValue<float>() * m_ZoomSpeed * Time.unscaledDeltaTime,
 			m_ZoomLimits.x,
 			m_ZoomLimits.y
 		);
 
 		// Rotate
-		m_DesiredRotation.y += m_RotateCameraInput.action.ReadValue<float>() * m_RotationSpeed * Time.deltaTime;
+		m_DesiredRotation.y += m_RotateCameraInput.action.ReadValue<float>() * m_RotationSpeed * Time.unscaledDeltaTime;
 
 		if (m_DesiredRotation.y > 180.0f)
 			m_DesiredRotation.y -= 360.0f;
@@ -133,17 +142,17 @@ public class CameraController : MonoBehaviour
 		HandleInputs();
 
 		// Move
-		transform.position = Vector3.Lerp(transform.position, m_DesiredMove, Time.deltaTime * m_MoveResponsiveness);
+		transform.position = Vector3.Lerp(transform.position, m_DesiredMove, Time.unscaledDeltaTime * m_MoveResponsiveness);
 
 		// Zoom
-		m_Camera.orthographicSize = Mathf.Lerp(m_Camera.orthographicSize, m_DesiredZoom, Time.deltaTime * m_ZoomReponsiveness);
+		m_Camera.orthographicSize = Mathf.Lerp(m_Camera.orthographicSize, m_DesiredZoom, Time.unscaledDeltaTime * m_ZoomReponsiveness);
 
 		// Rotate
 		if(m_CanRotate)
 			transform.rotation = Quaternion.Slerp(
 				transform.rotation,
 				Quaternion.Euler(m_DesiredRotation),
-				Time.deltaTime * m_RotationReponsiveness
+				Time.unscaledDeltaTime * m_RotationReponsiveness
 			);
 	}
 }

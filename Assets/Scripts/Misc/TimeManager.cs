@@ -40,7 +40,7 @@ public class TimeManager : MonoBehaviour
 				(m_PlayerData.GameState == PlayState.Play2x ? Play2xTimescale : 1.0f));
 	}
 
-	private void OnPlayerStateChanged(PlayState value)
+	private void OnPlayerStateChanged(PlayState oldValue, PlayState value)
 	{
 		if (IsPaused)
 			return;
