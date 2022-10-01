@@ -31,6 +31,8 @@ public class TimeManager : MonoBehaviour
 		m_PlayerData.OnStateChanged += OnPlayerStateChanged;
 	}
 
+	private void OnDestroy() =>	m_PlayerData.OnStateChanged -= OnPlayerStateChanged;
+
 	public void Pause(bool shouldPause = true)
 	{
 		IsPaused = shouldPause;

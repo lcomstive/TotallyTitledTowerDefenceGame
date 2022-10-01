@@ -45,6 +45,11 @@ public class PlayButton : MonoBehaviour
 		OnGameStateChanged(m_PlayerData.GameState, m_PlayerData.GameState);
 	}
 
+	private void OnDestroy()
+	{
+		m_PlayerData.OnStateChanged -= OnGameStateChanged;
+	}
+
 	private void OnGameStateChanged(PlayState oldValue, PlayState value)
 	{
 		Color buttonColor = m_Button.image.color;

@@ -17,7 +17,12 @@ public enum WaveState
 	/// <summary>
 	/// Delay between rounds when autostart is enabled
 	/// </summary>
-	AutoStartDelay
+	AutoStartDelay,
+
+	/// <summary>
+	/// Game end state has triggered
+	/// </summary>
+	GameEnded
 }
 
 public class WaveSpawner : MonoBehaviour
@@ -40,6 +45,13 @@ public class WaveSpawner : MonoBehaviour
 	
 	[SerializeField, Tooltip("All enemies have been spawned")]
 	private UnityEvent m_SpawningFinished;
+
+	[Header("Game State Changes")]
+	[SerializeField]
+	private UnityEvent m_AllLivesLost;
+
+	[SerializeField]
+	private UnityEvent m_AllWavesFinished;
 
 #if UNITY_EDITOR
 	[Header("Debug")]
@@ -160,6 +172,13 @@ public class WaveSpawner : MonoBehaviour
 				{
 					enemyData.ApplyDamage(float.MaxValue);
 					BuildableManager.PlayerData.Lives--;
+
+					if (BuildableManager.PlayerData.Lives <= 0 &&
+						m_State != WaveState.GameEnded)
+					{
+						m_State = WaveState.GameEnded;
+						m_AllLivesLost?.Invoke();
+					}
 				};
 			}
 
@@ -226,7 +245,18 @@ public class WaveSpawner : MonoBehaviour
 	{
 		if (m_SpawnedEnemies <= 0 &&
 			m_State == WaveState.Waiting)
-			StartCoroutine(RunWaveFinished());
+		{
+			if(Round < MaxRounds)
+				StartCoroutine(RunWaveFinished());
+			else
+			{
+				m_AllWavesFinished?.Invoke();
+				m_State = WaveState.GameEnded;
+			}
+		}
+
+		if (m_State == WaveState.GameEnded)
+			yield break;
 
 		yield return new WaitForSeconds(1.0f);
 

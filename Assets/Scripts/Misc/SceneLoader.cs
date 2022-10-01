@@ -8,6 +8,7 @@ public class SceneLoader : MonoBehaviour
 	public UnityEvent SceneLoaded;
 
 	public void LoadScene(int index) => SceneManager.LoadScene(index);
+	public void ReloadScene() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
 	public void Exit() => Application.Quit();
 
