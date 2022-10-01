@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using System.Runtime.CompilerServices;
 
 public class BuildableManager : MonoBehaviour
 {
@@ -136,6 +137,12 @@ public class BuildableManager : MonoBehaviour
 		State = BuildState.None;
 		SelectedBuildable = null;
 		m_SelectedBuilding = null;
+
+		if(Instance.m_NewBuildingPreview)
+		{
+			Destroy(Instance.m_NewBuildingPreview);
+			Instance.m_NewBuildingPreview = null;
+		}
 
 		SelectedBuildingChanged?.Invoke(null);
 	}

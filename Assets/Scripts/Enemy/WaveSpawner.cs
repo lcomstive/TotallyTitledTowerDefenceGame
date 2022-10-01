@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
 using System.Threading.Tasks;
+using TMPro;
 
 public enum WaveState
 {
@@ -30,6 +31,7 @@ public class WaveSpawner : MonoBehaviour
 	[SerializeField] private WaveData m_WaveData;
 	[SerializeField] private PlayerData m_PlayerData;
 	[SerializeField] private Config m_Config;
+	[SerializeField] private TMP_Text m_RoundsText;
 
 	[SerializeField, Tooltip("Time between starting wave and spawning enemies, in seconds")]
 	private float m_StartDelay = 2.0f;
@@ -87,6 +89,9 @@ public class WaveSpawner : MonoBehaviour
 #endif
 
 		m_PlayerData.OnStateChanged += OnGameStateChanged;
+
+		if (m_RoundsText)
+			m_RoundsText.text = $"{Round + 1} / {MaxRounds}";
 
 		StartCoroutine(CheckRoundFinished());
 	}
@@ -221,6 +226,8 @@ public class WaveSpawner : MonoBehaviour
 		// m_PlayerData.GameState = PlayState.Building;
 
 		Round++;
+		if (m_RoundsText)
+			m_RoundsText.text = $"{Round + 1} / {MaxRounds}";
 
 		if (m_Config && m_Config.AutoStartRounds)
 		{
@@ -246,7 +253,7 @@ public class WaveSpawner : MonoBehaviour
 		if (m_SpawnedEnemies <= 0 &&
 			m_State == WaveState.Waiting)
 		{
-			if(Round < MaxRounds)
+			if(Round < MaxRounds - 1)
 				StartCoroutine(RunWaveFinished());
 			else
 			{

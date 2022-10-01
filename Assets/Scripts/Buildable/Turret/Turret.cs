@@ -61,7 +61,7 @@ public class Turret : MonoBehaviour
 
 	private void Update()
 	{
-		m_ShootCooldown = Mathf.Clamp(m_ShootCooldown - Time.deltaTime, 0, m_Data.FireRate);
+		m_ShootCooldown = Mathf.Clamp(m_ShootCooldown - Time.deltaTime, 0, 1.0f / m_Data.FireRate);
 
 		if (m_CurrentTarget == null)
 			return;

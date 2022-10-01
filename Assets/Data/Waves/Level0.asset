@@ -12,50 +12,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d252d1e750661e4ab438d3404d237c2, type: 3}
   m_Name: Level0
   m_EditorClassIdentifier: 
-  PlayerLives: 2
+  PlayerLives: 10
   PlayerStartingCurrency:
-    m_Value: 100
+    m_Value: 50
     m_Unit: 0
   MaxRounds: 20
   MinEnemiesAtOnce: 3
   MaxEnemiesAtOnce: 20
-  MaxEnemySpeedMultiplier: 5
+  MaxEnemySpeedMultiplier: 4.5
   InitialEnemySpeedMultiplier: 1
-  MinEnemySpawnInterval: 0.5
+  MinEnemySpawnInterval: 0.75
   DifficultyCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 0.2946299
+      outSlope: 0.2946299
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.90758365
-      value: 0.34366906
-      inSlope: 0.62023985
-      outSlope: 0.62023985
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.046569932
-      outWeight: 0.33333334
+      outWeight: 0.1625
     - serializedVersion: 3
       time: 1
       value: 0.7
-      inSlope: 7.199763
-      outSlope: 7.199763
+      inSlope: 0.9198111
+      outSlope: 0.9198111
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.10387755
+      inWeight: 0.116666675
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  InitialRoundSpawnSpeed: 3
+  InitialRoundSpawnSpeed: 2.35
   PotentialEnemies:
   - Health: 10
     Prefab: {fileID: 5853581721551443068, guid: 71937abea99a6b04c86760441de38844,

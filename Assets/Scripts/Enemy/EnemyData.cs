@@ -11,7 +11,7 @@ public class EnemyData : MonoBehaviour
 
 	private void OnDestroy()
 	{
-		if(m_Health >= 0) // Most likely deleted in editor
+		if(m_Health > 0) // Most likely deleted in editor
 			Destroyed?.Invoke(null);
 	}
 
