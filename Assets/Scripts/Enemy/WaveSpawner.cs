@@ -8,11 +8,22 @@ public class WaveSpawner : MonoBehaviour
 {
 	[SerializeField] private WaveData m_WaveData;
 	[SerializeField] private PlayerData m_PlayerData;
+	[SerializeField] private Config m_Config;
 
-	[SerializeField, Tooltip("Time between starting wave and spawning enemies")]
+	[SerializeField, Tooltip("Time between starting wave and spawning enemies, in seconds")]
 	private float m_StartDelay = 2.0f;
 
-	[SerializeField] private UnityEvent m_WaveStarted, m_WaveFinished;
+	[SerializeField, Tooltip("Time between clearing enemies and starting next wave, in seconds")]
+	private float m_AutoStartDelay = 2.0f;
+
+	[SerializeField, Tooltip("When the wave spawning begins")]
+	private UnityEvent m_WaveStarted;
+
+	[SerializeField, Tooltip("Wave has finished spawning and all enemies no longer exist in scene")]
+	private UnityEvent m_WaveFinished;
+	
+	[SerializeField, Tooltip("All enemies have been spawned")]
+	private UnityEvent m_SpawningFinished;
 
 #if UNITY_EDITOR
 	[Header("Debug")]
@@ -22,11 +33,12 @@ public class WaveSpawner : MonoBehaviour
 	public int Round { get; private set; } = 0;
 	public int MaxRounds => m_WaveData?.MaxRounds ?? -1;
 	public WaveData WaveData => m_WaveData;
-	public bool IsWaveFinished => m_SpawnedEnemies <= 0;
+	public bool IsWaveFinished { get; private set; } = true;
 
 	public static WaveSpawner Instance { get; private set; }
 
 	private int m_SpawnedEnemies = 0;
+	private PlayState m_PreviousPlayState;
 
 	private void Start()
 	{
@@ -64,6 +76,8 @@ public class WaveSpawner : MonoBehaviour
 	{
 		if (!IsWaveFinished || !Instance)
 			return;
+		IsWaveFinished = false;
+
 		Debug.Log($"Starting round {Round + 1}/{MaxRounds + 1}...");
 		m_WaveStarted?.Invoke();
 
@@ -131,8 +145,12 @@ public class WaveSpawner : MonoBehaviour
 			// Time to wait between spawning enemies
 			float spawnInterval = m_WaveData.InitialRoundSpawnSpeed * (1.0f - (Round / (float)MaxRounds));
 			spawnInterval = Mathf.Max(spawnInterval, m_WaveData.MinEnemySpawnInterval);
-			yield return new WaitForSeconds(spawnInterval);
+
+			if(i < spawnCount - 1)
+				yield return new WaitForSeconds(spawnInterval);
 		}
+
+		m_SpawningFinished?.Invoke();
 
 		if(m_SpawnedEnemies <= 0)
 			RunWaveFinished(); // No enemies spawned?
@@ -149,7 +167,7 @@ public class WaveSpawner : MonoBehaviour
 		return Mathf.Clamp(enemies, 0, m_WaveData.MaxEnemiesAtOnce);
 	}
 
-	private void RunWaveFinished()
+	private async void RunWaveFinished()
 	{
 		m_SpawnedEnemies = 0;
 
@@ -159,9 +177,18 @@ public class WaveSpawner : MonoBehaviour
 		// Unity Event
 		m_WaveFinished?.Invoke();
 
+		m_PreviousPlayState = m_PlayerData.GameState;
 		m_PlayerData.GameState = PlayState.Building;
 
 		Round++;
+		IsWaveFinished = true;
+		
+		if(m_Config && m_Config.AutoStartRounds)
+		{
+			await Task.Delay((int)(m_AutoStartDelay * 1000));
+			m_PlayerData.GameState = m_PreviousPlayState;
+			NextWave();
+		}
 	}
 
 	public delegate void OnWaveFinished();

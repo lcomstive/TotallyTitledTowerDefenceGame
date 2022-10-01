@@ -45,7 +45,8 @@ public class TraversePath : MonoBehaviour
 		DistanceFromEndOfPath -= distanceTravelled;
 
 		// Rotate towards target
-		Quaternion lookAtRot =
+		Vector3 delta = m_TargetNode.Position - transform.position;
+		Quaternion lookAtRot = delta.magnitude == 0 ? Quaternion.identity :
 			Quaternion.LookRotation(m_TargetNode.Position - transform.position, Vector3.up);
 
 		transform.rotation =
