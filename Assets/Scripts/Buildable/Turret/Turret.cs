@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -20,6 +21,10 @@ public class Turret : MonoBehaviour
 	[SerializeField, Tooltip("Where to spawn bullets")]
 	private Transform m_BarrelTip;
 	private BuildableInfo m_BuildableInfo;
+
+	[Space()]
+	[SerializeField]
+	private UnityEvent m_OnFired;
 
 	private Transform m_CurrentTarget = null;
 
@@ -90,6 +95,8 @@ public class Turret : MonoBehaviour
 			bulletCollision.Shooter = m_BuildableInfo;
 
 		m_ShootCooldown = 1.0f / Mathf.Max(m_Data.FireRate, 0.1f);
+
+		m_OnFired?.Invoke();
 	}
 
 	private Transform ChooseTarget()
