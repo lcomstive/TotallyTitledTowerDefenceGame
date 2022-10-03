@@ -27,10 +27,10 @@ MonoBehaviour:
   ValidPlacementTags:
   - Terrain
   SpawnOffset: {x: 0, y: 0.15, z: 0}
-  Damage: 30
+  Damage: 15
   BulletPrefab: {fileID: 4664053120533762950, guid: 7fcfd47428a271847bd20968d7572a63,
     type: 3}
-  FireRate: 0.4
-  BulletVelocity: 2.5
-  RotationSpeed: 4
+  FireRate: 0.25
+  BulletVelocity: 3
+  RotationSpeed: 8
   RestrictRotation: 0

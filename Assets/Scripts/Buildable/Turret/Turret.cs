@@ -3,11 +3,13 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using System.Threading.Tasks;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
+[SelectionBase] // Select the object with this script instead of 
 [RequireComponent(typeof(BuildableInfo))]
 [RequireComponent(typeof(SphereCollider))]
 public class Turret : MonoBehaviour
@@ -29,9 +31,9 @@ public class Turret : MonoBehaviour
 	private Transform m_CurrentTarget = null;
 
 	/// <summary>
-	/// Delay to check for enemies in range, seconds.
+	/// Delay to check for enemies in range, milliseconds.
 	/// </summary>
-	private const float EnemyCheckDelay = 0.5f;
+	private const int EnemyCheckDelay = 100;
 
 	/// <summary>
 	/// Maximum size of <see cref="m_EnemiesInRange"/>, limiting max amount of raycasts done each check
@@ -61,7 +63,7 @@ public class Turret : MonoBehaviour
 		collider.radius /= 2.0f; // Radius, not diameter
 
 		// Begin checking for enemies in radius
-		StartCoroutine(CheckEnemiesInRangeLoop());
+		CheckEnemiesInRangeLoop();
 	}
 
 	private void Update()
@@ -105,24 +107,41 @@ public class Turret : MonoBehaviour
 			return null;
 
 		// Sort by distance
-		m_EnemiesInRange.OrderBy(x => Vector3.Distance(m_BarrelTip.position, x.position)).ToList();
+		m_EnemiesInRange.OrderBy(x => Vector3.Distance(transform.position, x.position)).ToList();
+		return m_EnemiesInRange[0];
 
-		for(int i = 0; i < m_EnemiesInRange.Count; i++)
+		/*
+		for(int i = 0; i < Mathf.Min(m_EnemiesInRange.Count, MaxEnemiesToCheck); i++)
 		{
+			if (m_EnemiesInRange[i] == null)
+				continue;
+
 			// Check for line of sight
-			Vector3 direction = m_EnemiesInRange[i].position - m_BarrelTip.position;
-			if (!Physics.Raycast(m_BarrelTip.position, direction, out RaycastHit hit, m_Data.VisionRadius) ||
+			Vector3 direction = m_EnemiesInRange[i].position - transform.position;
+#if UNITY_EDITOR
+			// For debugging. Don't include in release build
+			if (Vector3.Distance(m_EnemiesInRange[i].position, transform.position) > m_Data.VisionRadius)
+			{
+				Debug.DrawRay(transform.position, direction * m_Data.VisionRadius, Color.yellow, EnemyCheckDelay / 1000.0f);
+				continue;
+			}
+#endif
+			if (!Physics.Raycast(transform.position, direction, out RaycastHit hit, m_Data.VisionRadius) ||
 				hit.transform != m_EnemiesInRange[i]
 				)
+			{
+				Debug.DrawRay(transform.position, direction * m_Data.VisionRadius, Color.red, EnemyCheckDelay / 1000.0f);
 				continue;
-			Debug.DrawRay(m_BarrelTip.position, direction * m_Data.VisionRadius, Color.green, EnemyCheckDelay);
+			}
+			Debug.DrawRay(transform.position, direction * m_Data.VisionRadius, Color.green, EnemyCheckDelay / 1000.0f);
 			return m_EnemiesInRange[i];
 		}
+		*/
 
 		return null;
 	}
 
-	private IEnumerator CheckEnemiesInRangeLoop()
+	private async void CheckEnemiesInRangeLoop()
 	{
 		m_EnemiesInRange.Clear();
 
@@ -133,9 +152,10 @@ public class Turret : MonoBehaviour
 
 		m_CurrentTarget = ChooseTarget();
 
-		yield return new WaitForSeconds(EnemyCheckDelay);
+		await Task.Delay(EnemyCheckDelay);
 
-		StartCoroutine(CheckEnemiesInRangeLoop());
+		if(Application.isPlaying)
+			CheckEnemiesInRangeLoop();
 	}
 
 #if UNITY_EDITOR

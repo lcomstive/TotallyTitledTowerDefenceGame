@@ -394,7 +394,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Barrel: {fileID: 6305916513646750880}
   m_EnemyTag: Enemy
-  m_MinAngleToTargetBeforeShooting: 10
+  m_MinAngleToTargetBeforeShooting: 5
   m_BarrelTip: {fileID: 5194644402387016218}
   m_OnFired:
     m_PersistentCalls:

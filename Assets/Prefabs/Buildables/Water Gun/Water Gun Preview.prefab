@@ -5,8 +5,14 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 623139778776199156, guid: 1d333aa0b53b7504589897c071e9c42a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 623139778776199156, guid: 1d333aa0b53b7504589897c071e9c42a,
         type: 3}
       propertyPath: m_TagString
@@ -19,6 +25,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 916047913764996823, guid: 1d333aa0b53b7504589897c071e9c42a,
         type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 916047913764996823, guid: 1d333aa0b53b7504589897c071e9c42a,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -27,10 +38,25 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 4626d124b86187f4ba4b1fafe4192878, type: 2}
+    - target: {fileID: 3075319862899280867, guid: 1d333aa0b53b7504589897c071e9c42a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3410547638955588013, guid: 1d333aa0b53b7504589897c071e9c42a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4190205814830484779, guid: 1d333aa0b53b7504589897c071e9c42a,
         type: 3}
       propertyPath: m_Name
       value: Water Gun Preview
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190205814830484779, guid: 1d333aa0b53b7504589897c071e9c42a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4190205814830484779, guid: 1d333aa0b53b7504589897c071e9c42a,
         type: 3}
@@ -45,12 +71,12 @@ PrefabInstance:
     - target: {fileID: 4778892081230572132, guid: 1d333aa0b53b7504589897c071e9c42a,
         type: 3}
       propertyPath: m_Size.x
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4778892081230572132, guid: 1d333aa0b53b7504589897c071e9c42a,
         type: 3}
       propertyPath: m_Size.y
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5111029157281151993, guid: 1d333aa0b53b7504589897c071e9c42a,
         type: 3}
@@ -119,13 +145,38 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 4626d124b86187f4ba4b1fafe4192878, type: 2}
     - target: {fileID: 5910840772228765442, guid: 1d333aa0b53b7504589897c071e9c42a,
         type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5910840772228765442, guid: 1d333aa0b53b7504589897c071e9c42a,
+        type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 6355449454325912609, guid: 1d333aa0b53b7504589897c071e9c42a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8038210495510556000, guid: 1d333aa0b53b7504589897c071e9c42a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8662993030028942953, guid: 1d333aa0b53b7504589897c071e9c42a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8662993030028942953, guid: 1d333aa0b53b7504589897c071e9c42a,
         type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 9186731502175197000, guid: 1d333aa0b53b7504589897c071e9c42a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9186731502175197000, guid: 1d333aa0b53b7504589897c071e9c42a,
         type: 3}
@@ -143,4 +194,5 @@ PrefabInstance:
     - {fileID: 21966918293078111, guid: 1d333aa0b53b7504589897c071e9c42a, type: 3}
     - {fileID: 7209785504839110183, guid: 1d333aa0b53b7504589897c071e9c42a, type: 3}
     - {fileID: 1270452544744564416, guid: 1d333aa0b53b7504589897c071e9c42a, type: 3}
+    m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d333aa0b53b7504589897c071e9c42a, type: 3}

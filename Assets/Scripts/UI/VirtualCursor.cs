@@ -103,7 +103,7 @@ public class VirtualCursor : MonoBehaviour
 			return;
 
 		// Move based on gamepad input
-		Vector2 input = m_MoveCursorInput.action.ReadValue<Vector2>() * m_CursorSpeed * Time.deltaTime;
+		Vector2 input = m_MoveCursorInput.action.ReadValue<Vector2>() * m_CursorSpeed * Time.unscaledDeltaTime;
 		Vector2 currentPosition = m_Mouse.position.ReadValue();
 		Vector2 desiredPosition = currentPosition + input;
 

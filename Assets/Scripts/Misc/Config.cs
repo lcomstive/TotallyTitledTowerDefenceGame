@@ -42,17 +42,17 @@ public class Config : ScriptableObject
 		PlayerPrefs.SetFloat("SFXVolume",	 SFXVolume);
 		PlayerPrefs.SetFloat("MusicVolume",  MusicVolume);
 		PlayerPrefs.SetFloat("MasterVolume", MasterVolume);
-		PlayerPrefs.SetInt("AutoStart", AutoStartRounds ? 1 : 0);
+		PlayerPrefs.SetInt("AutoStart",		 AutoStartRounds ? 1 : 0);
 
 		PlayerPrefs.Save();
 	}
 
 	public void Load()
 	{
-		SFXVolume		= PlayerPrefs.GetFloat("SFXVolume");
-		MusicVolume		= PlayerPrefs.GetFloat("MusicVolume");
-		MasterVolume	= PlayerPrefs.GetFloat("MasterVolume");
-		AutoStartRounds = PlayerPrefs.GetInt("AutoStart") == 1;
+		SFXVolume		= PlayerPrefs.GetFloat("SFXVolume",		1.0f);
+		MusicVolume		= PlayerPrefs.GetFloat("MusicVolume",	1.0f);
+		MasterVolume	= PlayerPrefs.GetFloat("MasterVolume",	0.8f);
+		AutoStartRounds = PlayerPrefs.GetInt("AutoStart",		0) == 1;
 
 		UpdateAudioMixer();
 

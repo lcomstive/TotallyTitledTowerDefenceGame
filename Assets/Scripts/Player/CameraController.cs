@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.InputSystem;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Camera))]
 public class CameraController : MonoBehaviour
@@ -109,16 +109,17 @@ public class CameraController : MonoBehaviour
 
 	private void HandleInputs()
 	{
-		// Move
-		Vector2 moveInput = m_MoveCameraInput.action.ReadValue<Vector2>();
-		m_DesiredMove += transform.TransformDirection(new Vector3(moveInput.x, moveInput.y, 0)) * m_MoveSpeed * Time.unscaledDeltaTime;
-
 		// Zoom
 		m_DesiredZoom = Mathf.Clamp(
 			m_DesiredZoom + m_ZoomCameraInput.action.ReadValue<float>() * m_ZoomSpeed * Time.unscaledDeltaTime,
 			m_ZoomLimits.x,
 			m_ZoomLimits.y
 		);
+
+		// Move
+		Vector2 moveInput = m_MoveCameraInput.action.ReadValue<Vector2>();
+		moveInput *= m_DesiredZoom / m_ZoomLimits.y;
+		m_DesiredMove += transform.TransformDirection(new Vector3(moveInput.x, moveInput.y, 0)) * m_MoveSpeed * Time.unscaledDeltaTime;
 
 		// Rotate
 		m_DesiredRotation.y += m_RotateCameraInput.action.ReadValue<float>() * m_RotationSpeed * Time.unscaledDeltaTime;

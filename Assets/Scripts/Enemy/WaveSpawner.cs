@@ -67,7 +67,6 @@ public class WaveSpawner : MonoBehaviour
 
 	public static WaveSpawner Instance { get; private set; }
 
-	[SerializeField]
 	private int m_SpawnedEnemies = 0;
 	private PlayState m_PreviousPlayState;
 	private WaveState m_State = WaveState.None;
