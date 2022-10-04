@@ -17,9 +17,9 @@ public class BuildableInfo : MonoBehaviour
 #if UNITY_EDITOR
 	private void Update()
 	{
+		float visionRadius = Data.GetVisionRadius(transform.position.y);
 		if(m_RadiusPreviewProjector)
-			m_RadiusPreviewProjector.size = 
-				new Vector3(Data.VisionRadius, Data.VisionRadius, m_RadiusPreviewProjector.size.z);
+			m_RadiusPreviewProjector.size = new Vector3(visionRadius, visionRadius, m_RadiusPreviewProjector.size.z);
 	}
 #endif
 
@@ -27,9 +27,9 @@ public class BuildableInfo : MonoBehaviour
 	{
 		if (!m_RadiusPreviewProjector)
 			return;
+		float visionRadius = Data.GetVisionRadius(transform.position.y);
 
-		m_RadiusPreviewProjector.size =
-			new Vector3(Data.VisionRadius, Data.VisionRadius, m_RadiusPreviewProjector.size.z);
+		m_RadiusPreviewProjector.size = new Vector3(visionRadius, visionRadius, m_RadiusPreviewProjector.size.z);
 		m_RadiusPreviewProjector.gameObject.SetActive(show);
 	}
 }

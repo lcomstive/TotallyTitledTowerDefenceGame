@@ -59,7 +59,7 @@ public class Turret : MonoBehaviour
 		// Setup collider
 		SphereCollider collider = GetComponent<SphereCollider>();
 		collider.isTrigger = true;
-		collider.radius = transform.InverseTransformPoint(Vector3.one * m_Data.VisionRadius).x;
+		collider.radius = transform.InverseTransformPoint(Vector3.one * m_Data.GetVisionRadius(transform.position.y)).x;
 		collider.radius /= 2.0f; // Radius, not diameter
 
 		// Begin checking for enemies in radius
@@ -82,7 +82,9 @@ public class Turret : MonoBehaviour
 
 		m_Barrel.rotation = Quaternion.Slerp(m_Barrel.rotation, lookAtRotation, Time.deltaTime * m_Data.RotationSpeed);
 
-		if (m_ShootCooldown <= 0.0f && Quaternion.Angle(m_Barrel.rotation, lookAtRotation) < m_MinAngleToTargetBeforeShooting)
+		float visionRadius = m_Data.GetVisionRadius(transform.position.y);
+		if (m_ShootCooldown <= 0.0f && Quaternion.Angle(m_Barrel.rotation, lookAtRotation) < m_MinAngleToTargetBeforeShooting &&
+			Physics.Raycast(m_BarrelTip.position, -delta.normalized, visionRadius))
 			Shoot();
 	}
 
@@ -136,16 +138,16 @@ public class Turret : MonoBehaviour
 			Debug.DrawRay(transform.position, direction * m_Data.VisionRadius, Color.green, EnemyCheckDelay / 1000.0f);
 			return m_EnemiesInRange[i];
 		}
-		*/
-
 		return null;
+		*/
 	}
 
 	private async void CheckEnemiesInRangeLoop()
 	{
 		m_EnemiesInRange.Clear();
 
-		Collider[] colliders = Physics.OverlapSphere(transform.position, m_Data.VisionRadius / 2.0f);
+		float visionRadius = m_Data.GetVisionRadius(transform.position.y);
+		Collider[] colliders = Physics.OverlapSphere(transform.position, visionRadius / 2.0f);
 		foreach (Collider collider in colliders)
 			if (collider.CompareTag(m_EnemyTag))
 				m_EnemiesInRange.Add(collider.transform);
