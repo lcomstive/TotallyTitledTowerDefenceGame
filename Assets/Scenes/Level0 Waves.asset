@@ -36,7 +36,7 @@ MonoBehaviour:
       outWeight: 0.1625
     - serializedVersion: 3
       time: 1
-      value: 0.7
+      value: 1
       inSlope: 0.9198111
       outSlope: 0.9198111
       tangentMode: 0
@@ -53,11 +53,11 @@ MonoBehaviour:
       type: 3}
     Difficulty: 2
     Reward:
-      m_Value: 2
+      m_Value: 1
       m_Unit: 0
   - Health: 25
     Prefab: {fileID: 533031535371747847, guid: 33ac5bd6d5794024a95ef9136004d3ee, type: 3}
     Difficulty: 5
     Reward:
-      m_Value: 5
+      m_Value: 2
       m_Unit: 0
