@@ -13198,6 +13198,7 @@ MonoBehaviour:
   m_Buildables:
   - {fileID: 11400000, guid: fbd0964ab771db24c8cccbd03f66bf31, type: 2}
   - {fileID: 11400000, guid: 05f45a4cdd220d54fb333532b5544309, type: 2}
+  - {fileID: 11400000, guid: 2af97a7800f57224a8bc3a6bae2420c2, type: 2}
   m_UIPrefab: {fileID: 7973850175107796328, guid: 316817d931c8e9e4880963506bff913e,
     type: 3}
 --- !u!1 &1079937386

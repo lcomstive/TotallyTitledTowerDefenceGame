@@ -10,27 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a5def7ba1355804bbe9670f061ae0e7, type: 3}
-  m_Name: Cannon
+  m_Name: Water Gun
   m_EditorClassIdentifier: 
-  DisplayName: Cannon
-  Prefab: {fileID: 4190205814830484779, guid: 88c3f3050b93eb24e959a97440601c7e, type: 3}
-  PreviewPrefab: {fileID: 3179107511400597425, guid: 6d99ac27d279a874789a4d6a1dd42421,
+  DisplayName: Water Gun
+  Prefab: {fileID: 4190205814830484779, guid: 1d333aa0b53b7504589897c071e9c42a, type: 3}
+  PreviewPrefab: {fileID: 5929073820651805556, guid: 85420c19514799a4abb393f908689d2d,
     type: 3}
   Cost:
-    m_Value: 150
+    m_Value: 15
     m_Unit: 0
   SellValue:
-    m_Value: 130
+    m_Value: 12
     m_Unit: 0
-  Description: Slow firing, but hard hitting
-  VisionRadius: 6.5
+  Description: Less potent, but fires quickly
+  VisionRadius: 5.5
   ValidPlacementTags:
   - Terrain
   SpawnOffset: {x: 0, y: 0.15, z: 0}
-  Damage: 15
-  BulletPrefab: {fileID: 4664053120533762950, guid: 7fcfd47428a271847bd20968d7572a63,
+  BulletPrefab: {fileID: 4810917858265246603, guid: 77ad7b2daa94cf1448b95747df5a4619,
     type: 3}
-  FireRate: 0.25
-  BulletVelocity: 3
-  RotationSpeed: 8
+  FireRate: 2.75
+  BulletVelocity: 2.75
+  RotationSpeed: 13
   RestrictRotation: 0
+  <Damage>k__BackingField: 1.75

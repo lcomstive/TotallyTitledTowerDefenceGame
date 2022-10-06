@@ -1,27 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletCollisionHandler : MonoBehaviour
+public class BulletProjectile : MonoBehaviour, IProjectile
 {
-	public BuildableInfo Shooter;
 	[SerializeField] private GameObject m_HitEnemyPrefab;
 	[SerializeField] private GameObject m_HitOtherPrefab;
 
 	[SerializeField] private string m_EnemyTag;
 
+	public BuildableInfo Shooter { get; set; }
+
 	private void OnCollisionEnter(Collision collision)
 	{
 		Destroy(gameObject);
+		Hit(collision.gameObject, collision.transform.CompareTag(m_EnemyTag));
+	}
 
+	protected virtual void Hit(GameObject other, bool isEnemy)
+	{
 		GameObject prefab = null;
-		if(collision.transform.CompareTag(m_EnemyTag))
+		if (isEnemy)
 		{
 			prefab = m_HitEnemyPrefab;
-
-			EnemyData enemyData = collision.gameObject.GetComponent<EnemyData>();
-			if(enemyData)
-				enemyData.ApplyDamage(Shooter);
+			IDamageable damageable = Shooter.Data as IDamageable;
+			if (damageable != null && other.TryGetComponent(out EnemyData enemyData))
+				enemyData.ApplyDamage(damageable);
 		}
 		else
 			prefab = m_HitOtherPrefab;

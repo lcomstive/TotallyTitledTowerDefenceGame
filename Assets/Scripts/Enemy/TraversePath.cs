@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class TraversePath : MonoBehaviour
 {
-	[SerializeField] private float m_Speed = 10.0f;
 	[SerializeField] private float m_RotateSpeed = 10.0f;
 
-	public float Speed
-	{
-		get => m_Speed;
-		set => m_Speed = value;
-	}
+	[field: SerializeField]
+	public float Speed { get; set; } = 10.0f;
 
 	public float DistanceFromEndOfPath { get; private set; }
 	public float DistanceFromStartOfPath { get; private set; }
+
+	/// <summary>
+	/// Multipliers for speed. Usually set by slowing utility turrets.
+	/// </summary>
+	public List<float> SpeedMultipliers = new List<float>();
 
     private PathNode m_TargetNode;
 
@@ -36,7 +37,10 @@ public class TraversePath : MonoBehaviour
 			return;
 
 		// Move towards target
-		float distanceTravelled = Time.deltaTime * m_Speed;
+		float distanceTravelled = Time.deltaTime * Speed;
+
+		foreach (float multiplier in SpeedMultipliers)
+			distanceTravelled *= multiplier;
 
 		Vector3 direction = (m_TargetNode.Position - m_StartPos).normalized;
 		transform.position += direction * distanceTravelled;

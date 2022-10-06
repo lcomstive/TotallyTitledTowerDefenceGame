@@ -8,7 +8,7 @@ public class BuildableList : MonoBehaviour
 
 	private List<BuildableButton> m_Buttons = new List<BuildableButton>();
 
-	private void Awake()
+	private void Start()
 	{
 		foreach(BuildableData data in m_Buildables)
 			AddToList(data);
@@ -16,7 +16,7 @@ public class BuildableList : MonoBehaviour
 		if(BuildableManager.PlayerData)
 			BuildableManager.PlayerData.Currency.ValueChanged += PlayerCurrencyChanged;
 
-		PlayerCurrencyChanged();
+		PlayerCurrencyChanged(BuildableManager.PlayerData.Currency);
 	}
 
 	private void OnDestroy()
@@ -25,9 +25,8 @@ public class BuildableList : MonoBehaviour
 			BuildableManager.PlayerData.Currency.ValueChanged -= PlayerCurrencyChanged;
 	}
 
-	private void PlayerCurrencyChanged()
+	private void PlayerCurrencyChanged(Currency available)
 	{
-		Currency available = BuildableManager.PlayerData.Currency;
 		foreach(BuildableButton button in m_Buttons)
 			button.CanBuy = button.Data.Cost <= available;
 	}

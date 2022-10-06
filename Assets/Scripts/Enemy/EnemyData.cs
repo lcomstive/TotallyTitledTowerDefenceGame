@@ -32,21 +32,17 @@ public class EnemyData : MonoBehaviour
 		}
 	}
 	
-	public void ApplyDamage(BuildableInfo buildable)
+	public void ApplyDamage(IDamageable damageable)
 	{
-		DamageableBuildableData data = buildable?.Data as DamageableBuildableData;
-		if(!buildable || !data)
-			return;
-
-		m_Health -= data.Damage;
+		m_Health -= damageable.Damage;
 
 		if(m_Health <= 0)
 		{
-			Destroyed?.Invoke(buildable);
+			Destroyed?.Invoke(damageable);
 			Destroy(gameObject);
 		}
 	}
 
-	public delegate void OnDestroyed(BuildableInfo buildable);
+	public delegate void OnDestroyed(IDamageable damageable);
 	public event OnDestroyed Destroyed;
 }

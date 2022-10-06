@@ -41,7 +41,7 @@ public struct Currency
 
 			m_Value = value;
 			Validate();
-			ValueChanged?.Invoke();
+			ValueChanged?.Invoke(this);
 		}
 	}
 
@@ -54,7 +54,7 @@ public struct Currency
 				return; // No change
 
 			m_Unit = value;
-			ValueChanged?.Invoke();
+			ValueChanged?.Invoke(this);
 		}
 	}
 
@@ -103,7 +103,7 @@ public struct Currency
 	public override bool Equals(object obj) => obj.GetType().Equals(typeof(Currency)) && (int)(Currency)obj == (int)this;
 	public override string ToString() => DisplayValue();
 
-	public delegate void OnValueChanged();
+	public delegate void OnValueChanged(Currency newValue);
 	public event OnValueChanged ValueChanged;
 
 	#region Operator Overloading

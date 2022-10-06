@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf50b3f150ade5b4fb2f5f4257bf6a88, type: 3}
+  m_Name: Goo Gun
+  m_EditorClassIdentifier: 
+  DisplayName: Goo Gun
+  Prefab: {fileID: 4190205814830484779, guid: 4a6f8eded35251d429ec23d274733d5d, type: 3}
+  PreviewPrefab: {fileID: 4190735862244200905, guid: 80fbdec228d25aa4a82416d07094c412,
+    type: 3}
+  Cost:
+    m_Value: 25
+    m_Unit: 0
+  SellValue:
+    m_Value: 10
+    m_Unit: 0
+  Description: Fires goo that slows enemies for a short period of time
+  VisionRadius: 6
+  ValidPlacementTags:
+  - Terrain
+  SpawnOffset: {x: 0, y: 0.15, z: 0}
+  BulletPrefab: {fileID: 4810917858265246603, guid: bc4178c746879104a99662f4752fb0bd,
+    type: 3}
+  FireRate: 0.5
+  BulletVelocity: 2.25
+  RotationSpeed: 10
+  RestrictRotation: 0
+  <Damage>k__BackingField: 1
+  SlowAmount: 0.7
+  SlowTime: 1.5

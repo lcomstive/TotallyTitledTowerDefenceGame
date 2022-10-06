@@ -154,10 +154,10 @@ public class WaveSpawner : MonoBehaviour
 				enemyData = go.AddComponent<EnemyData>();
 			enemyData.SetData(selectedEnemy);
 
-			enemyData.Destroyed += (info) =>
+			enemyData.Destroyed += (damageable) =>
 			{
-				if(info)
-					info.KillCount++;
+				if(damageable != null)
+					damageable.KillCount++;
 
 				if(BuildableManager.PlayerData)
 					BuildableManager.PlayerData.Currency += enemyData.Data.Reward;

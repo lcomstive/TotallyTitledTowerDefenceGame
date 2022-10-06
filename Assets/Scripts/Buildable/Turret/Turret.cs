@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using UnityEditor;
 #endif
 
-[SelectionBase] // Select the object with this script instead of 
+[SelectionBase] // Select the object with this script instead of children
 [RequireComponent(typeof(BuildableInfo))]
 [RequireComponent(typeof(SphereCollider))]
 public class Turret : MonoBehaviour
@@ -95,8 +95,8 @@ public class Turret : MonoBehaviour
 		if (bullet.TryGetComponent(out Rigidbody rigidbody))
 			rigidbody.AddForce(m_BarrelTip.forward * m_Data.BulletVelocity, ForceMode.Impulse);
 
-		if (bullet.TryGetComponent(out BulletCollisionHandler bulletCollision))
-			bulletCollision.Shooter = m_BuildableInfo;
+		if (bullet.TryGetComponent(out IProjectile projectile))
+			projectile.Shooter = m_BuildableInfo;
 
 		m_ShootCooldown = 1.0f / Mathf.Max(m_Data.FireRate, 0.1f);
 

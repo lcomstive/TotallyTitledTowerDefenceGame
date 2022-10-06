@@ -20,19 +20,11 @@ public class BuildableData : ScriptableObject
 
 	public Vector3 SpawnOffset = Vector3.zero;
 
-	public BuildableData()
-	{
-		Cost.Validate();
-	}
+	public BuildableData() => Cost.Validate();
 
 	/// <summary>
 	/// Gets the total vision radius this buildable has
 	/// </summary>
 	/// <param name="transformY">Y value of the buildable transform</param>
-	public float GetVisionRadius(float transformY) => VisionRadius * (0.5f + transformY / 2.0f);
-}
-
-public abstract class DamageableBuildableData : BuildableData
-{
-	public float Damage = 1.0f;
+	public float GetVisionRadius(float transformY) => VisionRadius * Mathf.Max(1.0f, 0.5f + transformY / 2.0f);
 }
