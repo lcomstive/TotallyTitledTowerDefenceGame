@@ -17,10 +17,10 @@ MonoBehaviour:
   PreviewPrefab: {fileID: 3179107511400597425, guid: 6d99ac27d279a874789a4d6a1dd42421,
     type: 3}
   Cost:
-    m_Value: 65
+    m_Value: 40
     m_Unit: 0
   SellValue:
-    m_Value: 55
+    m_Value: 35
     m_Unit: 0
   Description: Slow firing, but hard hitting
   VisionRadius: 7
