@@ -5,25 +5,27 @@ public class BuildableList : MonoBehaviour
 {
 	[SerializeField] private BuildableData[] m_Buildables;
 	[SerializeField] private GameObject m_UIPrefab;
+	[SerializeField] private PlayerData m_PlayerData;
 
 	private List<BuildableButton> m_Buttons = new List<BuildableButton>();
 
 	private void Start()
 	{
+		if(!m_PlayerData)
+		{
+			Debug.LogError($"Player data is not set in '{name}' BuildableList");
+			enabled = false;
+			return;
+		}
+
 		foreach(BuildableData data in m_Buildables)
 			AddToList(data);
 
-		if(BuildableManager.PlayerData)
-			BuildableManager.PlayerData.Currency.ValueChanged += PlayerCurrencyChanged;
-
-		PlayerCurrencyChanged(BuildableManager.PlayerData.Currency);
+		m_PlayerData.Currency.ValueChanged += PlayerCurrencyChanged;
+		PlayerCurrencyChanged(m_PlayerData.Currency);
 	}
 
-	private void OnDestroy()
-	{
-		if(BuildableManager.PlayerData)
-			BuildableManager.PlayerData.Currency.ValueChanged -= PlayerCurrencyChanged;
-	}
+	private void OnDestroy() => m_PlayerData.Currency.ValueChanged -= PlayerCurrencyChanged;
 
 	private void PlayerCurrencyChanged(Currency available)
 	{

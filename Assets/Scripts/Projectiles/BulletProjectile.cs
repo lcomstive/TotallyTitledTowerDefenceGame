@@ -21,9 +21,9 @@ public class BulletProjectile : MonoBehaviour, IProjectile
 		if (isEnemy)
 		{
 			prefab = m_HitEnemyPrefab;
-			IDamageable damageable = Shooter.Data as IDamageable;
-			if (damageable != null && other.TryGetComponent(out EnemyData enemyData))
-				enemyData.ApplyDamage(damageable);
+			IDamageDealer damageDealer = Shooter.Data as IDamageDealer;
+			if (damageDealer != null && other.TryGetComponent(out IDamageable damageable))
+				damageable.ApplyDamage(damageDealer);
 		}
 		else
 			prefab = m_HitOtherPrefab;

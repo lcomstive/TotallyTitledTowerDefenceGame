@@ -31,18 +31,14 @@ public class Turret : MonoBehaviour
 	private Transform m_CurrentTarget = null;
 
 	/// <summary>
-	/// Delay to check for enemies in range, milliseconds.
+	/// Delay to check for enemies in range, in seconds.
 	/// </summary>
-	private const int EnemyCheckDelay = 100;
-
-	/// <summary>
-	/// Maximum size of <see cref="m_EnemiesInRange"/>, limiting max amount of raycasts done each check
-	/// </summary>
-	private const int MaxEnemiesToCheck = 5;
+	private const float EnemyCheckDelay = 0.1f;
 
 	private TurretData m_Data;
-	[SerializeField] private float m_ShootCooldown = 0.0f;
-	[SerializeField] private List<Transform> m_EnemiesInRange = new List<Transform>();
+	private float m_ShootCooldown = 0.0f;
+	private Coroutine m_EnemyCheckRoutine = null;
+	private List<Transform> m_EnemiesInRange = new List<Transform>();
 
 	private void Start()
 	{
@@ -63,8 +59,10 @@ public class Turret : MonoBehaviour
 		collider.radius /= 2.0f; // Radius, not diameter
 
 		// Begin checking for enemies in radius
-		CheckEnemiesInRangeLoop();
+		m_EnemyCheckRoutine = StartCoroutine(CheckEnemiesInRangeLoop());
 	}
+
+	private void OnDestroy() => StopCoroutine(m_EnemyCheckRoutine);
 
 	private void Update()
 	{
@@ -111,38 +109,9 @@ public class Turret : MonoBehaviour
 		// Sort by distance
 		m_EnemiesInRange.OrderBy(x => Vector3.Distance(transform.position, x.position)).ToList();
 		return m_EnemiesInRange[0];
-
-		/*
-		for(int i = 0; i < Mathf.Min(m_EnemiesInRange.Count, MaxEnemiesToCheck); i++)
-		{
-			if (m_EnemiesInRange[i] == null)
-				continue;
-
-			// Check for line of sight
-			Vector3 direction = m_EnemiesInRange[i].position - transform.position;
-#if UNITY_EDITOR
-			// For debugging. Don't include in release build
-			if (Vector3.Distance(m_EnemiesInRange[i].position, transform.position) > m_Data.VisionRadius)
-			{
-				Debug.DrawRay(transform.position, direction * m_Data.VisionRadius, Color.yellow, EnemyCheckDelay / 1000.0f);
-				continue;
-			}
-#endif
-			if (!Physics.Raycast(transform.position, direction, out RaycastHit hit, m_Data.VisionRadius) ||
-				hit.transform != m_EnemiesInRange[i]
-				)
-			{
-				Debug.DrawRay(transform.position, direction * m_Data.VisionRadius, Color.red, EnemyCheckDelay / 1000.0f);
-				continue;
-			}
-			Debug.DrawRay(transform.position, direction * m_Data.VisionRadius, Color.green, EnemyCheckDelay / 1000.0f);
-			return m_EnemiesInRange[i];
-		}
-		return null;
-		*/
 	}
 
-	private async void CheckEnemiesInRangeLoop()
+	private IEnumerator CheckEnemiesInRangeLoop()
 	{
 		m_EnemiesInRange.Clear();
 
@@ -154,10 +123,9 @@ public class Turret : MonoBehaviour
 
 		m_CurrentTarget = ChooseTarget();
 
-		await Task.Delay(EnemyCheckDelay);
+		yield return new WaitForSeconds(EnemyCheckDelay);
 
-		if(Application.isPlaying)
-			CheckEnemiesInRangeLoop();
+		m_EnemyCheckRoutine = StartCoroutine(CheckEnemiesInRangeLoop());
 	}
 
 #if UNITY_EDITOR

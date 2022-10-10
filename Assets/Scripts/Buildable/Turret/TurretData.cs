@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Turret", menuName = "Custom/Buildable/Turret")]
-public class TurretData : BuildableData, IDamageable
+public class TurretData : BuildableData, IDamageDealer
 {
 	[Header("Turret Specific")]
 	public GameObject BulletPrefab;

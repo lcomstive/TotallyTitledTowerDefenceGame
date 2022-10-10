@@ -2,177 +2,91 @@
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
+[RequireComponent(typeof(MousePicker))]
 public class BuildableManager : MonoBehaviour
 {
-	public enum BuildState { None, SelectExisting, BuildNew }
-
-	public static BuildState State { get; private set; } = BuildState.None;
-	public static BuildableData SelectedBuildable { get; private set; }
-
-	[SerializeField] private LayerMask m_RayMask;
 	[SerializeField] private PlayerData m_PlayerData;
 	[SerializeField] private InputActionReference m_SelectInput;
-	[SerializeField] private string m_BuildableTag = "Buildable";
-	[SerializeField] private InputActionReference m_CursorPositionInput;
 	[SerializeField] private bool m_PlacementSnapping = true;
 
-	public BuildState m_State;
-
+	public bool IsBuilding { get; private set; }
+	
 	/// <summary>
 	/// Time, in seconds, to ignore select/click input after placing a building.
 	/// This is to prevent immediately showing building info,
 	///		unless the player holds down the input
 	/// </summary>
-	[Tooltip("Time, in seconds, to ignore select/click input after placing a building")]
-	[SerializeField] private float m_IgnoreSelectTimeAfterPlaced = 0.15f;
+	[Tooltip("Time, in milliseconds, to ignore select/click input after placing a building")]
+	[SerializeField] private int m_IgnoreSelectTimeAfterPlaced = 150;
 
-	private float m_PlacementTimer = 0.0f; // Seconds since last placed a buildings
+	/// <summary>
+	/// Instantiated preview of selected building
+	/// </summary>
+	private GameObject m_NewBuildingPreview = null;
 
 	// Cached variables
-	private EventSystem m_EventSystem;
-	private Camera m_Camera; // Uses Camera.main
-	private static BuildableInfo m_SelectedBuilding = null;
+	public MousePicker Picker { get; private set; } = null;
+	private BuildableData m_Selected = null;
 
-	public static BuildableManager Instance { get; private set; } = null;
+	private void Start() => Picker = GetComponent<MousePicker>();
 
-	public static PlayerData PlayerData => Instance?.m_PlayerData;
-
-	private void Awake()
+	private void LateUpdate()
 	{
-		if (!Instance)
-			Instance = this;
-		else
-			Destroy(gameObject);
-
-		m_Camera = Camera.main;
-		m_EventSystem = EventSystem.current;
-	}
-
-	private void OnDestroy()
-	{
-		if (Instance == this)
-			Instance = null;
-	}
-
-	private void Update()
-	{
-		m_State = State;
 		bool selectPressed = m_SelectInput.action.IsPressed();
 
-		Ray ray = m_Camera.ScreenPointToRay(m_CursorPositionInput.action.ReadValue<Vector2>());
-
-		if(m_EventSystem.IsPointerOverGameObject()) // Pointer is over UI, don't update
+		if (!IsBuilding)
 			return;
-		if (!Physics.Raycast(ray, out RaycastHit hit, 1000.0f, m_RayMask, QueryTriggerInteraction.Ignore)) // Check if hit any world object
+
+		if (Vector3.Dot(Picker.RayHit.normal, Vector3.up) > 0.75f &&
+			m_Selected.ValidPlacementTags.Contains(Picker.RayHit.collider.tag)
+			) // Update build preview. Also handles spawning buildable from preview
+			PlaceBuilding(Picker.RayHit.point);
+
+		if (Picker.RayHit.collider == null && selectPressed)
+			Deselect();
+	}
+
+	public void StartBuilding(BuildableData data)
+	{
+		Picker.Deselect();
+		Picker.CanSelect = false;
+
+		m_Selected = data;
+		IsBuilding = true;
+	}
+
+	public void Deselect()
+	{
+		if (!IsBuilding || !m_Selected)
+			return; // Invalid state
+
+		IsBuilding = false;
+
+		if(m_NewBuildingPreview)
 		{
-			if(selectPressed)
-				DeselectBuilding();
-			return;
-		}
-
-		if(m_PlacementTimer < m_IgnoreSelectTimeAfterPlaced)
-			m_PlacementTimer += Time.deltaTime;
-		bool canSelect = m_PlacementTimer >= m_IgnoreSelectTimeAfterPlaced;
-
-		Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.magenta, 0.1f);
-
-		switch(State)
-		{
-			case BuildState.BuildNew:
-				{
-					if (Vector3.Dot(hit.normal, Vector3.up) > 0.75f &&
-						SelectedBuildable.ValidPlacementTags.Contains(hit.collider.tag)
-						) // Update build preview. Also handles spawning buildable from preview
-						PlaceBuilding(hit.point);
-					break;
-				}
-			default:
-			case BuildState.None:
-				{
-					if(!selectPressed || !canSelect)
-						break; // No mouse input, don't do anything
-
-					// Select building to view info
-					bool buildableTag = hit.collider.CompareTag(m_BuildableTag);
-					if(buildableTag)
-					{
-						BuildableInfo info = hit.collider.GetComponentInParent<BuildableInfo>();
-						if(info != m_SelectedBuilding)
-							SelectBuilding(info);
-					}
-					// Deselect object
-					else
-						DeselectBuilding();
-					break;
-				}
+			Destroy(m_NewBuildingPreview);
+			m_NewBuildingPreview = null;
 		}
 	}
 
-	private void SelectBuilding(BuildableInfo info)
-	{
-		if (!info)
-			return;
-		m_SelectedBuilding = info;
-		SelectedBuildable = info.Data;
-		State = BuildState.SelectExisting;
-		SelectedBuildingChanged?.Invoke(info);
+	public void RefundBuilding(BuildableData data) => m_PlayerData.Currency += data.SellValue;
 
-		Debug.Log($"Selected {info.gameObject.name}");
-	}
-
-	public static void StartBuilding(BuildableData data)
-	{
-		DeselectBuilding();
-
-		SelectedBuildable = data;
-		State = BuildState.BuildNew;
-	}
-
-	public static void DeselectBuilding()
-	{
-		if(m_SelectedBuilding)
-			m_SelectedBuilding.ShowRadius(false);
-
-		State = BuildState.None;
-		SelectedBuildable = null;
-		m_SelectedBuilding = null;
-
-		if(Instance.m_NewBuildingPreview)
-		{
-			Destroy(Instance.m_NewBuildingPreview);
-			Instance.m_NewBuildingPreview = null;
-		}
-
-		SelectedBuildingChanged?.Invoke(null);
-	}
-
-	public static void RefundSelected()
-	{
-		if(!SelectedBuildable)
-			return;
-		Instance.m_PlayerData.Currency += SelectedBuildable.SellValue;
-		Destroy(m_SelectedBuilding.gameObject);
-		DeselectBuilding();
-
-		// TODO: Play poof effect :3
-	}
-
-	private GameObject m_NewBuildingPreview = null;
-	private void PlaceBuilding(Vector3 point)
+	private async void PlaceBuilding(Vector3 point)
 	{
 		// Spawn preview object if it doesn't exist
 		if (!m_NewBuildingPreview)
 		{
 			m_NewBuildingPreview = Instantiate(
-				SelectedBuildable.PreviewPrefab,
-				point + SelectedBuildable.SpawnOffset,
-				SelectedBuildable.PreviewPrefab.transform.rotation
+				m_Selected.PreviewPrefab,
+				point + m_Selected.SpawnOffset,
+				m_Selected.PreviewPrefab.transform.rotation
 			);
 			BuildableInfo newInfo = m_NewBuildingPreview.GetComponent<BuildableInfo>();
 			if(!newInfo)
 				newInfo = m_NewBuildingPreview.AddComponent<BuildableInfo>();
-			newInfo.Data = SelectedBuildable;
+			newInfo.Data = m_Selected;
 			newInfo.ShowRadius(true);
 		}
 
@@ -183,7 +97,7 @@ public class BuildableManager : MonoBehaviour
 			desiredPosition.x = Mathf.Round(desiredPosition.x);
 			desiredPosition.z = Mathf.Round(desiredPosition.z);
 		}
-		desiredPosition += SelectedBuildable.SpawnOffset;
+		desiredPosition += m_Selected.SpawnOffset;
 		m_NewBuildingPreview.transform.position = desiredPosition;
 
 		if (m_SelectInput.action.IsPressed())
@@ -195,24 +109,23 @@ public class BuildableManager : MonoBehaviour
 
 			// Spawn buildable
 			GameObject go = Instantiate(
-				SelectedBuildable.Prefab,
+				m_Selected.Prefab,
 				desiredPosition,
-				SelectedBuildable.Prefab.transform.rotation
+				m_Selected.Prefab.transform.rotation
 			);
 			BuildableInfo buildInfo = go.GetComponent<BuildableInfo>();
 			if(!buildInfo)
 				buildInfo = go.AddComponent<BuildableInfo>();
-			buildInfo.Data = SelectedBuildable;
+			buildInfo.Data = m_Selected;
 
 			// Subtract from player currency
-			PlayerData.Currency -= SelectedBuildable.Cost;
+			m_PlayerData.Currency -= m_Selected.Cost;
 
 			// Reset state
-			m_PlacementTimer = 0;
-			DeselectBuilding();
+			Deselect();
 		}
-	}
 
-	public delegate void OnSelectedBuildingChanged(BuildableInfo info);
-	public static event OnSelectedBuildingChanged SelectedBuildingChanged;
+		await Task.Delay(m_IgnoreSelectTimeAfterPlaced);
+		Picker.CanSelect = true;
+	}
 }

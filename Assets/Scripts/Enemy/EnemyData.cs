@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyData : MonoBehaviour
+public class EnemyData : MonoBehaviour, IDamageable
 {
 	[SerializeField] WaveEnemy m_Data;
 	[SerializeField] private float m_Health = 0;
@@ -8,6 +8,9 @@ public class EnemyData : MonoBehaviour
 	public WaveEnemy Data => m_Data;
 
 	public float Health => m_Health;
+
+	[field: SerializeField]
+	public float MaxHealth { get; private set; } = 10.0f;
 
 	private void OnDestroy()
 	{
@@ -32,17 +35,16 @@ public class EnemyData : MonoBehaviour
 		}
 	}
 	
-	public void ApplyDamage(IDamageable damageable)
+	public void ApplyDamage(IDamageDealer dealer)
 	{
-		m_Health -= damageable.Damage;
+		m_Health -= dealer.Damage;
 
 		if(m_Health <= 0)
 		{
-			Destroyed?.Invoke(damageable);
+			Destroyed?.Invoke(dealer);
 			Destroy(gameObject);
 		}
 	}
 
-	public delegate void OnDestroyed(IDamageable damageable);
-	public event OnDestroyed Destroyed;
+	public event IDamageable.OnDestroyed Destroyed;
 }

@@ -4,11 +4,14 @@ using UnityEngine.UI;
 
 public class BuildableButton : MonoBehaviour
 {
+	public BuildableData Data { get; private set; }
+
 	[SerializeField] private TMP_Text m_Title;
 	[SerializeField] private TMP_Text m_Cost;
 	[SerializeField] private TMP_Text m_Description;
 
-	public BuildableData Data { get; private set; }
+	private BuildableManager m_Manager;
+
 
 	private bool m_CanBuy = false;
 	public bool CanBuy
@@ -27,6 +30,7 @@ public class BuildableButton : MonoBehaviour
 	public void SetData(BuildableData data)
 	{
 		Data = data;
+		m_Manager = FindObjectOfType<BuildableManager>();
 
 		UpdateValues();
 		ShowDescriptionText(false);
@@ -37,8 +41,8 @@ public class BuildableButton : MonoBehaviour
 		if(!m_CanBuy)
 			return;
 
-		BuildableManager.DeselectBuilding();
-		BuildableManager.StartBuilding(Data);
+		m_Manager.Picker.Deselect();
+		m_Manager.StartBuilding(Data);
 	}
 
 	public void ShowDescriptionText(bool show) => m_Description.alpha = show ? 1 : 0;

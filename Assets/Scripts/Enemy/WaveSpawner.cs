@@ -78,8 +78,8 @@ public class WaveSpawner : MonoBehaviour
 		else
 			Instance = this;
 
-		BuildableManager.PlayerData.Lives = m_WaveData.PlayerLives;
-		BuildableManager.PlayerData.Currency.Copy(m_WaveData.PlayerStartingCurrency);
+		m_PlayerData.Lives = m_WaveData.PlayerLives;
+		m_PlayerData.Currency.Copy(m_WaveData.PlayerStartingCurrency);
 
 		m_PlayerData.GameState = PlayState.Building;
 
@@ -159,8 +159,8 @@ public class WaveSpawner : MonoBehaviour
 				if(damageable != null)
 					damageable.KillCount++;
 
-				if(BuildableManager.PlayerData)
-					BuildableManager.PlayerData.Currency += enemyData.Data.Reward;
+				if(m_PlayerData)
+					m_PlayerData.Currency += enemyData.Data.Reward;
 
 				if(m_SpawnedEnemies > 0)
 					m_SpawnedEnemies--;
@@ -175,9 +175,9 @@ public class WaveSpawner : MonoBehaviour
 				traversePath.FinishedPath += () =>
 				{
 					enemyData.ApplyDamage(float.MaxValue);
-					BuildableManager.PlayerData.Lives--;
+					m_PlayerData.Lives--;
 
-					if (BuildableManager.PlayerData.Lives <= 0 &&
+					if (m_PlayerData.Lives <= 0 &&
 						m_State != WaveState.GameEnded)
 					{
 						m_State = WaveState.GameEnded;
