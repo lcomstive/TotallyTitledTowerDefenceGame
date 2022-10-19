@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Lives: 10
   Currency:
-    m_Value: 50
-    m_Unit: 0
+    m_Value: 1
+    m_Unit: 2

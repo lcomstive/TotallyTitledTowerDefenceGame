@@ -22,15 +22,18 @@ MonoBehaviour:
   SellValue:
     m_Value: 35
     m_Unit: 0
-  Description: Slow firing, but hard hitting
+  Description: Shoots <color=#ff6969>fire</color> projectiles that apply damage over
+    time
   VisionRadius: 7
   ValidPlacementTags:
   - Terrain
   SpawnOffset: {x: 0, y: 0.15, z: 0}
   BulletPrefab: {fileID: 4664053120533762950, guid: 7fcfd47428a271847bd20968d7572a63,
     type: 3}
-  FireRate: 0.35
-  BulletVelocity: 1.5
+  FireRate: 0.5
+  BulletVelocity: 1.7
   RotationSpeed: 9
   RestrictRotation: 0
-  <Damage>k__BackingField: 25
+  <Damage>k__BackingField: 0.5
+  Element: 2
+  ElementTime: 2

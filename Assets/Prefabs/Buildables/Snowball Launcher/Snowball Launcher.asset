@@ -9,30 +9,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf50b3f150ade5b4fb2f5f4257bf6a88, type: 3}
-  m_Name: Goo Gun
+  m_Script: {fileID: 11500000, guid: 0a5def7ba1355804bbe9670f061ae0e7, type: 3}
+  m_Name: Snowball Launcher
   m_EditorClassIdentifier: 
-  DisplayName: Goo Gun
+  DisplayName: Snowball Launcher
   Prefab: {fileID: 4190205814830484779, guid: 4a6f8eded35251d429ec23d274733d5d, type: 3}
   PreviewPrefab: {fileID: 4190735862244200905, guid: 80fbdec228d25aa4a82416d07094c412,
     type: 3}
   Cost:
-    m_Value: 25
-    m_Unit: 0
-  SellValue:
     m_Value: 10
     m_Unit: 0
-  Description: Fires goo that slows enemies for a short period of time
+  SellValue:
+    m_Value: 6
+    m_Unit: 0
+  Description: Launches snowballs, temporarily applying <color=#b8d3ff>ice</color>
+    to units hit
   VisionRadius: 6
   ValidPlacementTags:
   - Terrain
   SpawnOffset: {x: 0, y: 0.15, z: 0}
   BulletPrefab: {fileID: 4810917858265246603, guid: bc4178c746879104a99662f4752fb0bd,
     type: 3}
-  FireRate: 0.5
-  BulletVelocity: 2.25
+  FireRate: 2
+  BulletVelocity: 7
   RotationSpeed: 10
   RestrictRotation: 0
-  <Damage>k__BackingField: 1
-  SlowAmount: 0.7
-  SlowTime: 1.5
+  <Damage>k__BackingField: 0
+  Element: 1
+  ElementTime: 0.5

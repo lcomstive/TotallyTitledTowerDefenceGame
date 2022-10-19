@@ -1,33 +1,48 @@
+using System;
 using UnityEngine;
 
-public class BulletProjectile : MonoBehaviour, IProjectile
+public class BulletProjectile : Projectile
 {
-	[SerializeField] private GameObject m_HitEnemyPrefab;
-	[SerializeField] private GameObject m_HitOtherPrefab;
-
-	[SerializeField] private string m_EnemyTag;
-
-	public BuildableInfo Shooter { get; set; }
-
-	private void OnCollisionEnter(Collision collision)
+	[Serializable]
+	private struct PrefabPair
 	{
-		Destroy(gameObject);
-		Hit(collision.gameObject, collision.transform.CompareTag(m_EnemyTag));
+		public string Tag;
+		public GameObject HitPrefab;
 	}
 
-	protected virtual void Hit(GameObject other, bool isEnemy)
-	{
-		GameObject prefab = null;
-		if (isEnemy)
-		{
-			prefab = m_HitEnemyPrefab;
-			IDamageDealer damageDealer = Shooter.Data as IDamageDealer;
-			if (damageDealer != null && other.TryGetComponent(out IDamageable damageable))
-				damageable.ApplyDamage(damageDealer);
-		}
-		else
-			prefab = m_HitOtherPrefab;
+	[SerializeField]
+	private GameObject m_DefaultHitPrefab;
 
-		Instantiate(prefab, transform.position, prefab.transform.rotation);
+	[SerializeField]
+	private PrefabPair[] m_HitPrefabs;
+
+	protected override void Hit(GameObject other)
+	{
+		// Apply damage
+		TurretData turretData = Shooter.Data as TurretData;
+		if (turretData && other.TryGetComponent(out IDamageable damageable))
+			damageable.ApplyDamage(turretData);
+
+		// Apply element
+		if (other.TryGetComponent(out IModifierHolder modifierHolder))
+			modifierHolder.TimedModifiers[Element] += ElementTime;
+
+		// Spawn hit prefab
+		GameObject hitPrefab = ChooseHitPrefab(other.tag);
+		if(hitPrefab)
+			Instantiate(hitPrefab, transform.position, hitPrefab.transform.rotation);
+
+		// Remove this object from scene
+		Destroy(gameObject);
+	}
+
+	private GameObject ChooseHitPrefab(string tag)
+	{
+		foreach(PrefabPair pair in m_HitPrefabs)
+		{
+			if (pair.Tag.Equals(tag))
+				return pair.HitPrefab;
+		}
+		return m_DefaultHitPrefab;
 	}
 }

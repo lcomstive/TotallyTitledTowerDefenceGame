@@ -27,8 +27,9 @@ public class EnemyData : MonoBehaviour, IDamageable
 	public void ApplyDamage(float damage)
 	{
 		m_Health -= damage;
+		Damaged?.Invoke(damage, null);
 
-		if(m_Health <= 0)
+		if (m_Health <= 0)
 		{
 			Destroyed?.Invoke(null);
 			Destroy(gameObject);
@@ -38,6 +39,7 @@ public class EnemyData : MonoBehaviour, IDamageable
 	public void ApplyDamage(IDamageDealer dealer)
 	{
 		m_Health -= dealer.Damage;
+		Damaged?.Invoke(dealer.Damage, dealer);
 
 		if(m_Health <= 0)
 		{
@@ -46,5 +48,6 @@ public class EnemyData : MonoBehaviour, IDamageable
 		}
 	}
 
+	public event IDamageable.OnDamaged Damaged;
 	public event IDamageable.OnDestroyed Destroyed;
 }

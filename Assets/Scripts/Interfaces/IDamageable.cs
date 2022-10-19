@@ -9,6 +9,9 @@ public interface IDamageable
 	public void ApplyDamage(float damage);
 	public void ApplyDamage(IDamageDealer dealer);
 
-	public delegate void OnDestroyed(IDamageDealer damageable);
+	public delegate void OnDamaged(float amount, IDamageDealer dealer);
+	public event OnDamaged Damaged;
+
+	public delegate void OnDestroyed(IDamageDealer dealer);
 	public event OnDestroyed Destroyed;
 }

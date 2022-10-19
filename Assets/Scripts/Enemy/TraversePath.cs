@@ -13,9 +13,9 @@ public class TraversePath : MonoBehaviour
 	public float DistanceFromStartOfPath { get; private set; }
 
 	/// <summary>
-	/// Multipliers for speed. Usually set by slowing utility turrets.
+	/// Multiplier to apply to speed. Usually set by slowing utility turrets or AoE effects.
 	/// </summary>
-	public List<float> SpeedMultipliers = new List<float>();
+	public float SpeedMultiplier = 1.0f;
 
     private PathNode m_TargetNode;
 
@@ -37,10 +37,7 @@ public class TraversePath : MonoBehaviour
 			return;
 
 		// Move towards target
-		float distanceTravelled = Time.deltaTime * Speed;
-
-		foreach (float multiplier in SpeedMultipliers)
-			distanceTravelled *= multiplier;
+		float distanceTravelled = Time.deltaTime * Speed * SpeedMultiplier;
 
 		Vector3 direction = (m_TargetNode.Position - m_StartPos).normalized;
 		transform.position += direction * distanceTravelled;

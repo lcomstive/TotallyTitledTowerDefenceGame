@@ -22,7 +22,8 @@ MonoBehaviour:
   SellValue:
     m_Value: 12
     m_Unit: 0
-  Description: Less potent, but fires quickly
+  Description: Applies small amount of damage, and <color=#639cf7>water</color> to
+    units hit
   VisionRadius: 5.5
   ValidPlacementTags:
   - Terrain
@@ -34,3 +35,5 @@ MonoBehaviour:
   RotationSpeed: 13
   RestrictRotation: 0
   <Damage>k__BackingField: 1.75
+  Element: 0
+  ElementTime: 0.25

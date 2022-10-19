@@ -94,7 +94,11 @@ public class Turret : MonoBehaviour
 			rigidbody.AddForce(m_BarrelTip.forward * m_Data.BulletVelocity, ForceMode.Impulse);
 
 		if (bullet.TryGetComponent(out IProjectile projectile))
+		{
 			projectile.Shooter = m_BuildableInfo;
+			projectile.Element = m_Data.Element;
+			projectile.ElementTime = m_Data.ElementTime;
+		}
 
 		m_ShootCooldown = 1.0f / Mathf.Max(m_Data.FireRate, 0.1f);
 

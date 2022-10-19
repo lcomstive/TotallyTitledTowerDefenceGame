@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5657cc9b7981f6848956be2059c1c32d, type: 3}
+  m_Script: {fileID: 11500000, guid: a395ac5fb7d16c44786a0e90979f4845, type: 3}
   m_Name: Cold Zone
   m_EditorClassIdentifier: 
   DisplayName: Cold Zone
@@ -17,14 +17,13 @@ MonoBehaviour:
   PreviewPrefab: {fileID: 4745703943047030810, guid: 2dff996bb08a4434dae209810aaab27a,
     type: 3}
   Cost:
-    m_Value: 50
+    m_Value: 35
     m_Unit: 0
   SellValue:
-    m_Value: 40
+    m_Value: 30
     m_Unit: 0
-  Description: Lowers the temperature in the area, slowing down enemies
+  Description: Applies <color=#b8d3ff>ice</color> to units within range
   VisionRadius: 5
   ValidPlacementTags:
   - Terrain
   SpawnOffset: {x: 0, y: 0.15, z: 0}
-  SlowMultiplier: 0.75

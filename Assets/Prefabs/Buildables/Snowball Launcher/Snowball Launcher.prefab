@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7138b1e5a87a1454595c4e372e7b46e9, type: 2}
+  - {fileID: 2100000, guid: 6a3b95a2aa7b19241933dee167a4ca0a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -150,7 +150,7 @@ MonoBehaviour:
   m_UVBias: {x: 0, y: 0}
   m_ScaleMode: 0
   m_Offset: {x: 0, y: 0, z: 2}
-  m_Size: {x: 6, y: 6, z: 3}
+  m_Size: {x: 1, y: 1, z: 3}
   m_FadeFactor: 1
 --- !u!1 &1003290909137455948
 GameObject:
@@ -214,7 +214,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7138b1e5a87a1454595c4e372e7b46e9, type: 2}
+  - {fileID: 2100000, guid: 6a3b95a2aa7b19241933dee167a4ca0a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 7209785504839110183}
   - component: {fileID: 1947343141849725220}
   m_Layer: 0
-  m_Name: Goo Gun
+  m_Name: Snowball Launcher
   m_TagString: Buildable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -352,8 +352,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  m_ShootCooldown: 0
-  m_EnemiesInRange: []
 --- !u!114 &1947343141849725220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,7 +378,19 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 677280779343773082}
+        m_TargetAssemblyTypeName: BuildableInfo, Assembly-CSharp
+        m_MethodName: ShowRadius
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
   OnDeselected:
     m_PersistentCalls:
@@ -388,6 +398,18 @@ MonoBehaviour:
       - m_Target: {fileID: 510774541512216641}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 677280779343773082}
+        m_TargetAssemblyTypeName: BuildableInfo, Assembly-CSharp
+        m_MethodName: ShowRadius
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -459,7 +481,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7138b1e5a87a1454595c4e372e7b46e9, type: 2}
+  - {fileID: 2100000, guid: 6a3b95a2aa7b19241933dee167a4ca0a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -520,8 +542,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6280173747059991284}
   m_LocalRotation: {x: 0.10239775, y: -0, z: -0, w: 0.9947435}
-  m_LocalPosition: {x: 0, y: 0.307, z: -0.016}
-  m_LocalScale: {x: 0.41136, y: 0.41136, z: 0.33309466}
+  m_LocalPosition: {x: 0, y: 0.1515, z: -0.0489}
+  m_LocalScale: {x: 0.13424909, y: 0.13424909, z: 0.4891048}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 800704745802128403}
@@ -557,7 +579,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7138b1e5a87a1454595c4e372e7b46e9, type: 2}
+  - {fileID: 2100000, guid: 6a3b95a2aa7b19241933dee167a4ca0a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -21,4 +21,12 @@ public class TurretData : BuildableData, IDamageDealer
 	public float Damage { get; private set; } = 1.0f;
 
 	public int KillCount { get; set; } = 0;
+
+	[Header("Element")]
+
+	[Tooltip("Element to apply to an IModifierHolder if hit")]
+	public Elements Element = Elements.Water;
+
+	[Tooltip("How long to apply Element, in seconds")]
+	public float ElementTime = 1.0f;
 }

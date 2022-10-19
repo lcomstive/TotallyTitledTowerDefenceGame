@@ -66,12 +66,12 @@ PrefabInstance:
     - target: {fileID: 4778892081230572132, guid: 1d333aa0b53b7504589897c071e9c42a,
         type: 3}
       propertyPath: m_Size.x
-      value: 5
+      value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 4778892081230572132, guid: 1d333aa0b53b7504589897c071e9c42a,
         type: 3}
       propertyPath: m_Size.y
-      value: 5
+      value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 5111029157281151993, guid: 1d333aa0b53b7504589897c071e9c42a,
         type: 3}
@@ -189,5 +189,6 @@ PrefabInstance:
     - {fileID: 21966918293078111, guid: 1d333aa0b53b7504589897c071e9c42a, type: 3}
     - {fileID: 7209785504839110183, guid: 1d333aa0b53b7504589897c071e9c42a, type: 3}
     - {fileID: 1270452544744564416, guid: 1d333aa0b53b7504589897c071e9c42a, type: 3}
+    - {fileID: 7466575396497785894, guid: 1d333aa0b53b7504589897c071e9c42a, type: 3}
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d333aa0b53b7504589897c071e9c42a, type: 3}

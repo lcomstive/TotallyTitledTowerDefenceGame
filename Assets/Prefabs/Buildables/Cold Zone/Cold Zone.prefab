@@ -235,6 +235,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86b8b2a1ce854e74a9d31f9f27d8f0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Element: 1
+  m_ElementTime: 0
 --- !u!54 &2496562281197210062
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -279,12 +281,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 677280779343773082}
+        m_TargetAssemblyTypeName: BuildableInfo, Assembly-CSharp
+        m_MethodName: ShowRadius
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   OnDeselected:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3651539677313684752}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 677280779343773082}
+        m_TargetAssemblyTypeName: BuildableInfo, Assembly-CSharp
+        m_MethodName: ShowRadius
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
