@@ -3,9 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Events;
-using UnityEngine.tvOS;
-using UnityEngine.Networking.Types;
-
 
 public class ModifierHolder : MonoBehaviour, IModifierHolder
 {

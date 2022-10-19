@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
+using GameAnalyticsSDK;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.Events;
 using System.Threading.Tasks;
-using TMPro;
+using UnityEngine.SceneManagement;
 
 public enum WaveState
 {
@@ -115,6 +116,7 @@ public class WaveSpawner : MonoBehaviour
 
 		Debug.Log($"Starting round {Round + 1}/{MaxRounds + 1}...");
 		m_WaveStarted?.Invoke();
+		GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, SceneManager.GetActiveScene().name);
 
 		if (m_StartDelay > 0)
 			await Task.Delay((int)(m_StartDelay * 1000));
@@ -181,6 +183,7 @@ public class WaveSpawner : MonoBehaviour
 						m_State != WaveState.GameEnded)
 					{
 						m_State = WaveState.GameEnded;
+						GameAnalytics.NewProgressionEvent(GAProgressionStatus.Fail, SceneManager.GetActiveScene().name, $"Wave{Round + 1}", (int)m_PlayerData.Currency);
 						m_AllLivesLost?.Invoke();
 					}
 				};
@@ -224,6 +227,9 @@ public class WaveSpawner : MonoBehaviour
 		m_PreviousPlayState = m_PlayerData.GameState;
 		// m_PlayerData.GameState = PlayState.Building;
 
+		// Game analytics
+		GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, SceneManager.GetActiveScene().name, $"Wave{Round + 1}", (int)m_PlayerData.Currency);
+
 		Round++;
 		if (m_RoundsText)
 			m_RoundsText.text = $"{Round + 1} / {MaxRounds}";
@@ -258,6 +264,7 @@ public class WaveSpawner : MonoBehaviour
 			{
 				m_AllWavesFinished?.Invoke();
 				m_State = WaveState.GameEnded;
+				GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, SceneManager.GetActiveScene().name, (int)m_PlayerData.Currency);
 			}
 		}
 

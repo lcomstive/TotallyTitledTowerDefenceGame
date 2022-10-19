@@ -43,10 +43,13 @@ public class DamageFlasher : MonoBehaviour
 	{
 		float time = 0.0f;
 		float desiredTime = m_FlashCurve.keys[^1].time;
-		while (time < desiredTime)
+		while (time < desiredTime && m_Renderers.Length > 0 && m_Renderers[0] != null)
 		{
-			for (int i = 0; i < m_Renderers.Length; i++)
-				m_Renderers[i].material.color = Color.Lerp(m_OriginalColours[i], m_FlashColor, m_FlashCurve.Evaluate(time));
+			for (int i = m_Renderers.Length - 1; i >= 0; i--)
+			{
+				if (m_Renderers[i])
+					m_Renderers[i].material.color = Color.Lerp(m_OriginalColours[i], m_FlashColor, m_FlashCurve.Evaluate(time));
+			}
 
 			float deltaTime = Time.deltaTime;
 			await Task.Delay((int)(deltaTime * 1000));

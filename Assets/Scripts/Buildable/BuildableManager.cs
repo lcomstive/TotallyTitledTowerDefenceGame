@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using GameAnalyticsSDK;
 
 [RequireComponent(typeof(MousePicker))]
 public class BuildableManager : MonoBehaviour
@@ -71,7 +72,14 @@ public class BuildableManager : MonoBehaviour
 		}
 	}
 
-	public void RefundBuilding(BuildableData data) => m_PlayerData.Currency += data.SellValue;
+	public void RefundBuilding(BuildableData data)
+	{
+		m_PlayerData.Currency += data.SellValue;
+
+		// Update analytics
+		GameAnalytics.NewDesignEvent($"buildable:sell:{m_Selected.name}");
+		GameAnalytics.NewResourceEvent(GAResourceFlowType.Source, "Currency", (int)data.SellValue, "buildable", data.name);
+	}
 
 	private async void PlaceBuilding(Vector3 point)
 	{
@@ -123,6 +131,10 @@ public class BuildableManager : MonoBehaviour
 
 			// Reset state
 			Deselect();
+
+			// Update analytics
+			GameAnalytics.NewDesignEvent($"buildable:buy:{m_Selected.name}");
+			GameAnalytics.NewResourceEvent(GAResourceFlowType.Sink, "Currency", (int)m_Selected.Cost, "buildable", m_Selected.name);
 		}
 
 		await Task.Delay(m_IgnoreSelectTimeAfterPlaced);
