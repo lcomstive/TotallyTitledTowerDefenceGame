@@ -1,15 +1,3 @@
-/*
- * 
- * 
- * --- WATER ---
- *  - Is primarily used to amplify other elements (e.g. ice, electricity)
- *	- Removes 
- * 
- * 
- * 
- * 
- */
-
 /// <see cref="Water"/>
 ///		- Is primarily used to amplify other elements (e.g. ice, electricity)
 ///		- Removes fire element
@@ -17,7 +5,7 @@
 ///		- Slows affected unit, this effect compounds
 ///		- Consumes water element
 ///	<see cref="Fire"/>
-///		 - Applies damage to unit over time (tick-based)
+///		 - Applies damage to unit over time (tick-based), increased when acid present
 ///		 - Not applied to tick when ice is present, and removes it in place of water
 ///	<see cref="Acid"/>
 ///		- Increases damage affected unit takes
@@ -26,6 +14,10 @@
 ///		- Halts unit for short period of time
 ///		- Time increased when water is present
 ///		- Cannot be applied to units with ice present
+///	<see cref="Ground"/>
+///		- Applies immediate damage to unit
+///		- Removes electricity element if present
+///		- Damage applied is reduced if ice element is present
 [System.Serializable]
 public enum Elements
 {
@@ -47,7 +39,7 @@ public enum Elements
 	Fire,
 
 	/// <summary>
-	/// Burns through armour, increasing damage from other units
+	/// Burns through armour, increasing overall damage taken
 	/// </summary>
 	Acid,
 
@@ -55,5 +47,11 @@ public enum Elements
 	/// Halts unit for short period of time.
 	/// Amplified by <see cref="Water"/> element.
 	/// </summary>
-	Electricity
+	Electricity,
+
+	/// <summary>
+	/// Applies more damage than other elements.
+	/// Removes <see cref="Electricity"/> element
+	/// </summary>
+	Ground
 }

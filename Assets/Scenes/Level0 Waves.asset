@@ -51,13 +51,15 @@ MonoBehaviour:
   - Health: 10
     Prefab: {fileID: 5853581721551443068, guid: 71937abea99a6b04c86760441de38844,
       type: 3}
+    AcidMultiplier: 1.25
     Difficulty: 2
     Reward:
-      m_Value: 1
+      m_Value: 2
       m_Unit: 0
   - Health: 25
     Prefab: {fileID: 533031535371747847, guid: 33ac5bd6d5794024a95ef9136004d3ee, type: 3}
+    AcidMultiplier: 1.75
     Difficulty: 5
     Reward:
-      m_Value: 2
+      m_Value: 5
       m_Unit: 0

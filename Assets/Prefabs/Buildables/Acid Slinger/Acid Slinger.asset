@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a5def7ba1355804bbe9670f061ae0e7, type: 3}
+  m_Name: Acid Slinger
+  m_EditorClassIdentifier: 
+  DisplayName: Acid Slinger
+  Prefab: {fileID: 4190205814830484779, guid: 71e4794b0ec64b84ea6792ffa02a9c62, type: 3}
+  PreviewPrefab: {fileID: 4266945833426830123, guid: 44cd7c040483af34fa36af30beba4cb2,
+    type: 3}
+  Cost:
+    m_Value: 30
+    m_Unit: 0
+  SellValue:
+    m_Value: 25
+    m_Unit: 0
+  Description: Applies <color=#69ff6e>acid</color> to units hit
+  VisionRadius: 6
+  ValidPlacementTags:
+  - Terrain
+  SpawnOffset: {x: 0, y: 0.15, z: 0}
+  BulletPrefab: {fileID: 4810917858265246603, guid: ec0992a267f2b1c4f937945ad712827a,
+    type: 3}
+  FireRate: 1.2
+  BulletVelocity: 2.5
+  RotationSpeed: 13
+  RestrictRotation: 0
+  <Damage>k__BackingField: 0
+  Element: 3
+  ElementTime: 0.35

@@ -23,6 +23,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cold Zone Preview
       objectReference: {fileID: 0}
+    - target: {fileID: 4463954379036208326, guid: ca7e0e1dfbf16104aa352919573116b0,
+        type: 3}
+      propertyPath: m_TagString
+      value: Buildable
+      objectReference: {fileID: 0}
     - target: {fileID: 5111029157281151993, guid: ca7e0e1dfbf16104aa352919573116b0,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -81,6 +86,11 @@ PrefabInstance:
     - target: {fileID: 5207018874924987178, guid: ca7e0e1dfbf16104aa352919573116b0,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6042284049162468029, guid: ca7e0e1dfbf16104aa352919573116b0,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6276023200447540815, guid: ca7e0e1dfbf16104aa352919573116b0,

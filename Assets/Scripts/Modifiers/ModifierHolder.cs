@@ -45,9 +45,14 @@ public class ModifierHolder : MonoBehaviour, IModifierHolder
 	public const float IceSlowAmount = 0.65f;
 
 	/// <summary>
+	/// Overall slow amount calculation is IceSlowAmount^(IceModifierCount / IceSlowAmountDivisor)
+	/// </summary>
+	public const float IceSlowAmountDivisor = 2.5f;
+
+	/// <summary>
 	/// Ice effect multiplier when water element is present.
 	/// </summary>
-	public const float IceAmplifierWater = 0.85f;
+	public const float IceAmplifierWater = 0.8f;
 
 	/// <summary>
 	/// When ice is converted to water (from fire),
@@ -56,7 +61,7 @@ public class ModifierHolder : MonoBehaviour, IModifierHolder
 	public const float IceToWaterTime = 1.0f;
 
 	/// <summary>
-	/// Amount of damage to apply every tick
+	/// Amount of damage to apply every tick when <see cref="Elements.Fire"/> is present
 	/// </summary>
 	public const float FireTickDamage = 3.5f;
 
@@ -64,6 +69,11 @@ public class ModifierHolder : MonoBehaviour, IModifierHolder
 	/// Multiplier for electricity time reduced when water present.
 	/// </summary>
 	public const float ElectricityTimeAmplifierWater = 0.85f;
+
+	/// <summary>
+	/// Amount of time to remove from acid, per tick, if water is also present
+	/// </summary>
+	public const float WaterReduceAcidPerTick = 0.2f;
 	#endregion
 
 	#region Local Components
@@ -103,7 +113,7 @@ public class ModifierHolder : MonoBehaviour, IModifierHolder
 
 		// Get traversable path component
 		m_TraversePath = GetComponent<TraversePath>();
-		
+
 		// Begin tick loop
 		if (m_Damageable != null)
 			StartCoroutine(TickLoop());
@@ -150,7 +160,7 @@ public class ModifierHolder : MonoBehaviour, IModifierHolder
 	private IEnumerator TickLoop()
 	{
 		// If ice element present, remove one water element
-		if(HasElement(Elements.Ice) && HasElement(Elements.Water))
+		if (HasElement(Elements.Ice) && HasElement(Elements.Water))
 		{
 			// Remove one water element modifier
 			if (Modifiers.Contains(Elements.Water))
@@ -165,7 +175,7 @@ public class ModifierHolder : MonoBehaviour, IModifierHolder
 		// When ice is also present, convert it in to water and remove fire
 		if (HasElement(Elements.Fire))
 		{
-			if(HasElement(Elements.Ice))
+			if (HasElement(Elements.Ice))
 			{
 				// Count all ice
 				float iceTime = TimedModifiers[Elements.Ice];
@@ -181,6 +191,10 @@ public class ModifierHolder : MonoBehaviour, IModifierHolder
 			else
 				m_Damageable.ApplyDamage(FireTickDamage);
 		}
+
+		// If (timed) acid & water are present, reduce time of acid
+		if (TimedModifiers.ContainsKey(Elements.Acid) && HasElement(Elements.Water))
+			TimedModifiers[Elements.Acid] = Mathf.Max(TimedModifiers[Elements.Acid] - WaterReduceAcidPerTick, 0.0f);
 
 		yield return new WaitForSeconds(TickTime);
 
@@ -216,7 +230,7 @@ public class ModifierHolder : MonoBehaviour, IModifierHolder
 		if (TimedModifiers[Elements.Ice] > 0)
 			iceModifiers++;
 
-		float speedMultiplier = iceModifiers > 0 ? Mathf.Pow(IceSlowAmount, iceModifiers) : 1.0f;
+		float speedMultiplier = iceModifiers > 0 ? Mathf.Pow(IceSlowAmount, iceModifiers / IceSlowAmountDivisor) : 1.0f;
 		if (iceModifiers > 0 && HasElement(Elements.Water))
 			speedMultiplier *= IceAmplifierWater;
 
@@ -229,11 +243,15 @@ public class ModifierHolder : MonoBehaviour, IModifierHolder
 	///		- Halts unit for short period of time
 	///		- Time increased when water is present
 	///		- Cannot be applied to units with ice present
+	///		- Ground removes electricity
 	/// </summary>
 	private void ApplyElectricityElement()
 	{
 		if (HasElement(Elements.Electricity) && m_TraversePath)
 			m_TraversePath.SpeedMultiplier = 0.0f;
+
+		if (HasElement(Elements.Ground))
+			RemoveElement(Elements.Electricity);
 	}
 
 	/// <summary>

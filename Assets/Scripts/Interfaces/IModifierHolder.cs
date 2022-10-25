@@ -12,4 +12,9 @@ public interface IModifierHolder
 	/// Modifiers that are applied to this entity
 	/// </summary>
 	public List<Elements> Modifiers { get; }
+
+	/// <summary>
+	/// Checks if <paramref name="element"/> is present in <see cref="Modifiers"/> or <see cref="TimedModifiers"/>
+	/// </summary>
+	public bool HasElement(Elements element);
 }

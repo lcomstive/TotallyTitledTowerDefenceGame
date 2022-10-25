@@ -8,6 +8,9 @@ public struct WaveEnemy
 	public float Health;
 	public GameObject Prefab;
 
+	[Tooltip("Multiplier to input damage when acid modifier is present")]
+	public float AcidMultiplier;
+
 	[Tooltip("Value representing difficulty of enemy. 0 is not difficult, 99 is extremely difficult")]
 	public uint Difficulty;
 

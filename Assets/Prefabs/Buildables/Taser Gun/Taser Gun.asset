@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a5def7ba1355804bbe9670f061ae0e7, type: 3}
+  m_Name: Taser Gun
+  m_EditorClassIdentifier: 
+  DisplayName: Taser Gun
+  Prefab: {fileID: 4190205814830484779, guid: 0a2e0c9091e804b42ac6b3aefa55fe69, type: 3}
+  PreviewPrefab: {fileID: 5929073820651805556, guid: 2555ca0cda4b3544798be0756d27b68b,
+    type: 3}
+  Cost:
+    m_Value: 25
+    m_Unit: 0
+  SellValue:
+    m_Value: 20
+    m_Unit: 0
+  Description: Applies <color=#fffa69>electricity</color> to units hit
+  VisionRadius: 5.5
+  ValidPlacementTags:
+  - Terrain
+  SpawnOffset: {x: 0, y: 0.15, z: 0}
+  BulletPrefab: {fileID: 4810917858265246603, guid: 835bbdeec2fe7cc41831d3db68bafba4,
+    type: 3}
+  FireRate: 1.25
+  BulletVelocity: 3
+  RotationSpeed: 16
+  RestrictRotation: 0
+  <Damage>k__BackingField: 0
+  Element: 4
+  ElementTime: 0.2

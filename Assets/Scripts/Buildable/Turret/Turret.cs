@@ -62,7 +62,11 @@ public class Turret : MonoBehaviour
 		m_EnemyCheckRoutine = StartCoroutine(CheckEnemiesInRangeLoop());
 	}
 
-	private void OnDestroy() => StopCoroutine(m_EnemyCheckRoutine);
+	private void OnDestroy()
+	{
+		if(m_EnemyCheckRoutine != null)
+			StopCoroutine(m_EnemyCheckRoutine);
+	}
 
 	private void Update()
 	{

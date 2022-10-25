@@ -12,6 +12,10 @@ public class EnemyData : MonoBehaviour, IDamageable
 	[field: SerializeField]
 	public float MaxHealth { get; private set; } = 10.0f;
 
+	private IModifierHolder m_ModifierHolder;
+
+	private void Start() => m_ModifierHolder = GetComponent<IModifierHolder>();
+
 	private void OnDestroy()
 	{
 		if(m_Health > 0) // Most likely deleted in editor
@@ -26,6 +30,7 @@ public class EnemyData : MonoBehaviour, IDamageable
 
 	public void ApplyDamage(float damage)
 	{
+		damage = CalculateDamage(damage);
 		m_Health -= damage;
 		Damaged?.Invoke(damage, null);
 
@@ -38,14 +43,22 @@ public class EnemyData : MonoBehaviour, IDamageable
 	
 	public void ApplyDamage(IDamageDealer dealer)
 	{
-		m_Health -= dealer.Damage;
-		Damaged?.Invoke(dealer.Damage, dealer);
+		float damage = CalculateDamage(dealer.Damage);
+		m_Health -= damage;
+		Damaged?.Invoke(damage, dealer);
 
 		if(m_Health <= 0)
 		{
 			Destroyed?.Invoke(dealer);
 			Destroy(gameObject);
 		}
+	}
+
+	private float CalculateDamage(float initialValue)
+	{
+		if (m_ModifierHolder != null && m_ModifierHolder.HasElement(Elements.Acid))
+			initialValue *= Data.AcidMultiplier;
+		return initialValue;
 	}
 
 	public event IDamageable.OnDamaged Damaged;

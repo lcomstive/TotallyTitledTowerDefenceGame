@@ -55,7 +55,9 @@ public class DamageFlasher : MonoBehaviour
 			await Task.Delay((int)(deltaTime * 1000));
 			time += deltaTime;
 		}
+
 		for (int i = 0; i < m_Renderers.Length; i++)
-			m_Renderers[i].material.color = m_OriginalColours[i];
+			if (m_Renderers[i])
+				m_Renderers[i].material.color = m_OriginalColours[i];
 	}
 }
