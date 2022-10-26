@@ -377,8 +377,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 90}
-  m_SizeDelta: {x: 0, y: 160}
+  m_AnchoredPosition: {x: 91.75212, y: 56.514465}
+  m_SizeDelta: {x: 183.5043, y: 113.0289}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6350222298478862948
 CanvasRenderer:
@@ -408,14 +408,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Elements:\n - <color=#639cf7>Water</color> - Increases effect of <color=#b8d3ff>ice</color>
+  m_text: "Elements:\n- <color=#639cf7>Water</color> \t\t- Increases effect of <color=#b8d3ff>ice</color>
     & <color=#fffa69>electricity</color>. Removes <color=#ff6969>fire</color>.\n-
-    <color=#b8d3ff>Ice</color> - Reduces speed of a unit.\n - <color=#ff6969>Fire</color>
-    - Inflicts damage to a unit over time.\n - <color=#69ff6e>Acid</color> - Increases
-    damage taken for a short period of time.\n - <color=#fffa69>Electricity</color>
-    - Halts unit for short period of time. Amplified by <color=#639cf7>water</color>.\n-
-    <color=#b56936>Ground</color> - Hard hitting. Removes <color=#fffa69>electricity</color>.
-    Damage reduced by <color=#b8d3ff>ice</color>."
+    <color=#b8d3ff>Ice</color> \t\t\t- Reduces speed of a unit.\n- <color=#ff6969>Fire</color>
+    \t\t- Inflicts damage to a unit over time.\n- <color=#69ff6e>Acid</color> \t\t-
+    Increases damage taken for a short period of time.\n- <color=#fffa69>Electricity</color>\t-
+    Halts unit for short period of time. Amplified by <color=#639cf7>water</color>.\n-
+    <color=#b56936>Ground</color> \t\t- Damage reduced by <color=#b8d3ff>ice</color>.
+    Removes <color=#fffa69>electricity</color>. "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1579dbaa68adbb34594fd8c1f5be6cd6, type: 2}
   m_sharedMaterial: {fileID: -6243429583208816974, guid: 1579dbaa68adbb34594fd8c1f5be6cd6,
@@ -443,8 +443,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 13
+  m_fontSizeBase: 13
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

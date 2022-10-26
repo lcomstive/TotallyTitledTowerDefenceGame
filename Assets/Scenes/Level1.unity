@@ -15770,49 +15770,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
       value: PlayOneShot
       objectReference: {fileID: 0}
-    - target: {fileID: 6350222298478862954, guid: 0a7d78b54277b704a8e1c41f6f7de457,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 183.5043
-      objectReference: {fileID: 0}
-    - target: {fileID: 6350222298478862954, guid: 0a7d78b54277b704a8e1c41f6f7de457,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 113.0289
-      objectReference: {fileID: 0}
-    - target: {fileID: 6350222298478862954, guid: 0a7d78b54277b704a8e1c41f6f7de457,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 91.75212
-      objectReference: {fileID: 0}
-    - target: {fileID: 6350222298478862954, guid: 0a7d78b54277b704a8e1c41f6f7de457,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 56.514465
-      objectReference: {fileID: 0}
-    - target: {fileID: 6350222298478862955, guid: 0a7d78b54277b704a8e1c41f6f7de457,
-        type: 3}
-      propertyPath: m_text
-      value: "Elements:\n- <color=#639cf7>Water</color> \t\t- Increases effect of
-        <color=#b8d3ff>ice</color> & <color=#fffa69>electricity</color>. Removes
-        <color=#ff6969>fire</color>.\n- <color=#b8d3ff>Ice</color> \t\t\t- Reduces
-        speed of a unit.\n- <color=#ff6969>Fire</color> \t\t- Inflicts damage to
-        a unit over time.\n- <color=#69ff6e>Acid</color> \t\t- Increases damage taken
-        for a short period of time.\n- <color=#fffa69>Electricity</color>\t- Halts
-        unit for short period of time. Amplified by <color=#639cf7>water</color>.\n-
-        <color=#b56936>Ground</color> \t\t- Damage reduced by <color=#b8d3ff>ice</color>.
-        Removes <color=#fffa69>electricity</color>. "
-      objectReference: {fileID: 0}
-    - target: {fileID: 6350222298478862955, guid: 0a7d78b54277b704a8e1c41f6f7de457,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 6350222298478862955, guid: 0a7d78b54277b704a8e1c41f6f7de457,
-        type: 3}
-      propertyPath: m_fontSizeBase
-      value: 13
-      objectReference: {fileID: 0}
     - target: {fileID: 6350222299458419957, guid: 0a7d78b54277b704a8e1c41f6f7de457,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
