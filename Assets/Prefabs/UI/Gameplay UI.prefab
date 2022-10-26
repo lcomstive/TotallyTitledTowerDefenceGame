@@ -409,12 +409,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Elements:\n - <color=#639cf7>Water</color> - Increases effect of <color=#b8d3ff>ice</color>
-    & <color=#fffa69>electricity</color>. Removes <color=#ff6969>fire</color>.\n
-    - <color=#b8d3ff>Ice</color> - Reduces speed of a unit.\n - <color=#ff6969>Fire</color>
+    & <color=#fffa69>electricity</color>. Removes <color=#ff6969>fire</color>.\n-
+    <color=#b8d3ff>Ice</color> - Reduces speed of a unit.\n - <color=#ff6969>Fire</color>
     - Inflicts damage to a unit over time.\n - <color=#69ff6e>Acid</color> - Increases
     damage taken for a short period of time.\n - <color=#fffa69>Electricity</color>
-    - Halts unit for short period of time. Amplified by <color=#639cf7>water</color>.\n
-    - <color=#b56936>Ground</color> - Hard hitting. Removes <color=#fffa69>electricity</color>.
+    - Halts unit for short period of time. Amplified by <color=#639cf7>water</color>.\n-
+    <color=#b56936>Ground</color> - Hard hitting. Removes <color=#fffa69>electricity</color>.
     Damage reduced by <color=#b8d3ff>ice</color>."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1579dbaa68adbb34594fd8c1f5be6cd6, type: 2}
@@ -1576,7 +1576,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Buildables:
   - {fileID: 11400000, guid: fbd0964ab771db24c8cccbd03f66bf31, type: 2}
+  - {fileID: 11400000, guid: d9133609d7741dc4daf9896d42f24620, type: 2}
+  - {fileID: 11400000, guid: 53efc2e62b3ce984eaa23cc4e0f9505c, type: 2}
+  - {fileID: 11400000, guid: ebdd7537fcda17b42a7d36960b19bdc3, type: 2}
+  - {fileID: 11400000, guid: b2cead3419c1c8c409f3b1b7704300ff, type: 2}
   - {fileID: 11400000, guid: 05f45a4cdd220d54fb333532b5544309, type: 2}
+  - {fileID: 11400000, guid: 2af97a7800f57224a8bc3a6bae2420c2, type: 2}
   m_UIPrefab: {fileID: 7973850175107796328, guid: 316817d931c8e9e4880963506bff913e,
     type: 3}
   m_PlayerData: {fileID: 11400000, guid: ef9c70ac6ecb511449274b3d82161b69, type: 2}

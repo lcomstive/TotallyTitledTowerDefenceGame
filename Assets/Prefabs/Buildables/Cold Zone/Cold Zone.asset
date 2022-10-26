@@ -17,10 +17,10 @@ MonoBehaviour:
   PreviewPrefab: {fileID: 4745703943047030810, guid: 2dff996bb08a4434dae209810aaab27a,
     type: 3}
   Cost:
-    m_Value: 35
+    m_Value: 40
     m_Unit: 0
   SellValue:
-    m_Value: 30
+    m_Value: 35
     m_Unit: 0
   Description: Applies <color=#b8d3ff>ice</color> to units within range
   PlacedDownAudio: {fileID: 8300000, guid: febb1c94df16b034c96056c0db566a1f, type: 3}

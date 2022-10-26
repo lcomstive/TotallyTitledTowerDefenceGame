@@ -21,6 +21,7 @@ MonoBehaviour:
   MaxEnemiesAtOnce: 20
   MaxEnemySpeedMultiplier: 4.5
   InitialEnemySpeedMultiplier: 1
+  MaxEnemyAdditionalHealthMultiplier: 1.6
   MinEnemySpawnInterval: 0.75
   DifficultyCurve:
     serializedVersion: 2

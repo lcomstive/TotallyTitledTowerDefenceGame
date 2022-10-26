@@ -15933,41 +15933,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6350222299992897703, guid: 0a7d78b54277b704a8e1c41f6f7de457,
-        type: 3}
-      propertyPath: m_Buildables.Array.size
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6350222299992897703, guid: 0a7d78b54277b704a8e1c41f6f7de457,
-        type: 3}
-      propertyPath: m_Buildables.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: 2af97a7800f57224a8bc3a6bae2420c2,
-        type: 2}
-    - target: {fileID: 6350222299992897703, guid: 0a7d78b54277b704a8e1c41f6f7de457,
-        type: 3}
-      propertyPath: m_Buildables.Array.data[3]
-      value: 
-      objectReference: {fileID: 11400000, guid: 53efc2e62b3ce984eaa23cc4e0f9505c,
-        type: 2}
-    - target: {fileID: 6350222299992897703, guid: 0a7d78b54277b704a8e1c41f6f7de457,
-        type: 3}
-      propertyPath: m_Buildables.Array.data[4]
-      value: 
-      objectReference: {fileID: 11400000, guid: ebdd7537fcda17b42a7d36960b19bdc3,
-        type: 2}
-    - target: {fileID: 6350222299992897703, guid: 0a7d78b54277b704a8e1c41f6f7de457,
-        type: 3}
-      propertyPath: m_Buildables.Array.data[5]
-      value: 
-      objectReference: {fileID: 11400000, guid: b2cead3419c1c8c409f3b1b7704300ff,
-        type: 2}
-    - target: {fileID: 6350222299992897703, guid: 0a7d78b54277b704a8e1c41f6f7de457,
-        type: 3}
-      propertyPath: m_Buildables.Array.data[6]
-      value: 
-      objectReference: {fileID: 11400000, guid: d9133609d7741dc4daf9896d42f24620,
-        type: 2}
     - target: {fileID: 6350222300024959165, guid: 0a7d78b54277b704a8e1c41f6f7de457,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
