@@ -1,0 +1,36 @@
+Totally Titled Tower Defence Game
+----------------------------------
+
+Lewis Comstive 2022
+
+----------------------------------
+
+Audio from Pixabay (https://pixabay.com)
+
+Licenses for each audio file can be located in the 'Licenses' folder alongside this file.
+
+----------------------------------
+
+Crosshairs Pack from Kenney
+
+https://www.kenney.nl/assets/crosshair-pack
+
+Under the CC0 1.0 Universal License
+
+----------------------------------
+
+Trash Can Icon by https://www.iconfinder.com/Ayub_Irawan
+
+Released under the Attribution-NonCommercial 3.0 Unported (CC BY-NC 3.0) License
+
+Modifications: Altered texture colour from black to white
+
+----------------------------------
+
+Cow Model from https://free3d.com/3d-model/low-poly-cow-75171.html
+
+----------------------------------
+
+Gothic A1 font from https://fonts.google.com/specimen/Gothic+A1
+
+Under the Open Font License v1.1
