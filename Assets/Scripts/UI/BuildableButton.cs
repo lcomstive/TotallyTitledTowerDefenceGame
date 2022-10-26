@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEditor.AssetImporters;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +12,6 @@ public class BuildableButton : MonoBehaviour
 	[SerializeField] private TMP_Text m_Description;
 
 	private BuildableManager m_Manager;
-
 
 	private bool m_CanBuy = false;
 	public bool CanBuy
@@ -45,14 +45,27 @@ public class BuildableButton : MonoBehaviour
 		m_Manager.StartBuilding(Data);
 	}
 
-	public void ShowDescriptionText(bool show) => m_Description.alpha = show ? 1 : 0;
+	public void ShowDescriptionText(bool show)
+	{
+		if (show)
+			UpdateValues();
+		m_Description.alpha = show ? 1 : 0;
+	}
 
 	private void UpdateValues()
 	{
 		m_Title.text = Data.DisplayName;
-		m_Description.text = Data.Description;
-		m_Cost.text = "$" + Data.Cost.DisplayValue();
 
+		m_Cost.text = "$" + Data.Cost.DisplayValue();
 		m_Cost.alpha = m_CanBuy ? 1.0f : 0.4f;
+
+		// Generate description text
+		m_Description.text = Data.Description;
+
+		string descriptionAdditional = Data.DescriptionAdditional;
+		if (!string.IsNullOrEmpty(descriptionAdditional))
+			m_Description.text += $"\n{descriptionAdditional}";
+
+		m_Description.text += $"\n<color=#9c9c9c>Sells for ${Data.SellValue}</color>";
 	}
 }

@@ -28,6 +28,7 @@ public class WaveData : ScriptableObject
 	public int MaxEnemiesAtOnce = 30;
 	public float MaxEnemySpeedMultiplier = 10.0f;
 	public float InitialEnemySpeedMultiplier = 1.0f;
+	public float MaxEnemyAdditionalHealthMultiplier = 2.5f;
 	public float MinEnemySpawnInterval = 0.1f;
 	public AnimationCurve DifficultyCurve;
 

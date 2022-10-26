@@ -22,10 +22,10 @@ public class EnemyData : MonoBehaviour, IDamageable
 			Destroyed?.Invoke(null);
 	}
 
-	public void SetData(WaveEnemy data)
+	public void SetData(WaveEnemy data, float healthMultiplier = 1.0f)
 	{
 		m_Data = data;
-		m_Health = m_Data.Health;
+		m_Health = (MaxHealth = m_Data.Health * healthMultiplier);
 	}
 
 	public void ApplyDamage(float damage)

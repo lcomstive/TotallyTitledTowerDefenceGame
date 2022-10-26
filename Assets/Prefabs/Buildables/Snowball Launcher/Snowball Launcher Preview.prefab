@@ -8,6 +8,11 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 510774541512216641, guid: 4a6f8eded35251d429ec23d274733d5d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 677280779343773082, guid: 4a6f8eded35251d429ec23d274733d5d,
         type: 3}
       propertyPath: m_ShowRadius
@@ -36,7 +41,7 @@ PrefabInstance:
     - target: {fileID: 4190205814830484779, guid: 4a6f8eded35251d429ec23d274733d5d,
         type: 3}
       propertyPath: m_Name
-      value: Goo Gun Preview
+      value: Snowball Launcher Preview
       objectReference: {fileID: 0}
     - target: {fileID: 4778892081230572132, guid: 4a6f8eded35251d429ec23d274733d5d,
         type: 3}
@@ -118,6 +123,16 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 4626d124b86187f4ba4b1fafe4192878, type: 2}
+    - target: {fileID: 8038210495510556000, guid: 4a6f8eded35251d429ec23d274733d5d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8261249990660036339, guid: 4a6f8eded35251d429ec23d274733d5d,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8692875343141735351, guid: 4a6f8eded35251d429ec23d274733d5d,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -149,5 +164,6 @@ PrefabInstance:
     - {fileID: 2137322392066037395, guid: 4a6f8eded35251d429ec23d274733d5d, type: 3}
     - {fileID: 1151867273996386358, guid: 4a6f8eded35251d429ec23d274733d5d, type: 3}
     - {fileID: 1947343141849725220, guid: 4a6f8eded35251d429ec23d274733d5d, type: 3}
+    - {fileID: 8261249990660036339, guid: 4a6f8eded35251d429ec23d274733d5d, type: 3}
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a6f8eded35251d429ec23d274733d5d, type: 3}

@@ -44,12 +44,9 @@ public class MousePicker : MonoBehaviour
 		bool selectPressed = m_SelectInput.action.IsPressed();
 		Ray ray = m_Camera.ScreenPointToRay(m_CursorPositionInput.action.ReadValue<Vector2>());
 
-		if (m_EventSystem.IsPointerOverGameObject())
-			return; // Pointer is over UI, ignore
-
 		if (!Physics.Raycast(ray, out m_RayHit, MaxRayDistance, m_RayMask, QueryTriggerInteraction.Ignore))
 		{
-			if (selectPressed)
+			if (selectPressed && !m_EventSystem.IsPointerOverGameObject())
 				Deselect(); // No objects hit, deselect anything selected
 			return;
 		}
@@ -60,7 +57,7 @@ public class MousePicker : MonoBehaviour
 		ISelectable selectable = RayHit.collider.GetComponentInParent<ISelectable>();
 		if (selectable != null && selectPressed)
 			Select(selectable);
-		else if (selectPressed)
+		else if (selectPressed && !m_EventSystem.IsPointerOverGameObject())
 			Deselect();
 	}
 

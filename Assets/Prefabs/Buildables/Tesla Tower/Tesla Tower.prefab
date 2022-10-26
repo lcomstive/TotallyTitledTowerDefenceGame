@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: 8803166221628392199}
   m_Layer: 0
   m_Name: S P H E R E
-  m_TagString: Untagged
+  m_TagString: Buildable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5372,7 +5372,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -2956057522291157042, guid: e653c9e7e362b3b4aa963f9cdcec863e,
     type: 2}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: febb1c94df16b034c96056c0db566a1f, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

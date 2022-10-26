@@ -23,6 +23,7 @@ MonoBehaviour:
     m_Value: 25
     m_Unit: 0
   Description: Applies <color=#69ff6e>acid</color> to units hit
+  PlacedDownAudio: {fileID: 8300000, guid: febb1c94df16b034c96056c0db566a1f, type: 3}
   VisionRadius: 6
   ValidPlacementTags:
   - Terrain

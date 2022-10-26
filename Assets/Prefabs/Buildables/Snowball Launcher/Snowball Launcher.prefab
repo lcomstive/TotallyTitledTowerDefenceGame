@@ -150,7 +150,7 @@ MonoBehaviour:
   m_UVBias: {x: 0, y: 0}
   m_ScaleMode: 0
   m_Offset: {x: 0, y: 0, z: 2}
-  m_Size: {x: 1, y: 1, z: 3}
+  m_Size: {x: 6, y: 6, z: 3}
   m_FadeFactor: 1
 --- !u!1 &1003290909137455948
 GameObject:
@@ -708,7 +708,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -2956057522291157042, guid: e653c9e7e362b3b4aa963f9cdcec863e,
     type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

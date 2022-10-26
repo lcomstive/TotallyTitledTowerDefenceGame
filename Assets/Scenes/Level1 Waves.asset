@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d252d1e750661e4ab438d3404d237c2, type: 3}
   m_Name: Level1 Waves
   m_EditorClassIdentifier: 
-  PlayerLives: 10
+  PlayerLives: 15
   PlayerStartingCurrency:
     m_Value: 50
     m_Unit: 0
   MaxRounds: 25
   MinEnemiesAtOnce: 4
-  MaxEnemiesAtOnce: 30
-  MaxEnemySpeedMultiplier: 5
+  MaxEnemiesAtOnce: 35
+  MaxEnemySpeedMultiplier: 6
   InitialEnemySpeedMultiplier: 1.1
-  MinEnemySpawnInterval: 0.75
+  MaxEnemyAdditionalHealthMultiplier: 2
+  MinEnemySpawnInterval: 0.25
   DifficultyCurve:
     serializedVersion: 2
     m_Curve:
@@ -52,14 +53,14 @@ MonoBehaviour:
     Prefab: {fileID: 5853581721551443068, guid: 71937abea99a6b04c86760441de38844,
       type: 3}
     AcidMultiplier: 1.25
-    Difficulty: 2
+    Difficulty: 3
     Reward:
       m_Value: 2
       m_Unit: 0
   - Health: 30
     Prefab: {fileID: 533031535371747847, guid: 33ac5bd6d5794024a95ef9136004d3ee, type: 3}
-    AcidMultiplier: 1.75
-    Difficulty: 5
+    AcidMultiplier: 0.75
+    Difficulty: 7
     Reward:
-      m_Value: 5
+      m_Value: 6
       m_Unit: 0

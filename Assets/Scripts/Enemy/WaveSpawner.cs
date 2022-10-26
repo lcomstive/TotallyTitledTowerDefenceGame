@@ -125,7 +125,8 @@ public class WaveSpawner : MonoBehaviour
 		if(m_PlayerData.GameState == PlayState.Building)
 			m_PlayerData.GameState = m_PreviousPlayState;
 
-		StartCoroutine(SpawnWave());
+		if(Path.Instance)
+			StartCoroutine(SpawnWave());
 	}
 
 	private IEnumerator SpawnWave()
@@ -142,6 +143,7 @@ public class WaveSpawner : MonoBehaviour
 		Vector3 spawnLocation = Path.Instance.PathNodes[0].Position;
 		int spawnCount = CalculateEnemiesToSpawn(difficulty);
 		Debug.Log($"Difficulty: {Mathf.RoundToInt(difficulty * 100)}% | Enemies spawning: {spawnCount}");
+		float healthMultiplier = 1.0f + (m_WaveData.MaxEnemyAdditionalHealthMultiplier * difficulty);
 		for (int i = 0; i < spawnCount; i++)
 		{
 			// TODO: Base this on difficulties of each enemy and difficulty curve
@@ -154,7 +156,7 @@ public class WaveSpawner : MonoBehaviour
 			EnemyData enemyData = go.GetComponent<EnemyData>();
 			if (!enemyData)
 				enemyData = go.AddComponent<EnemyData>();
-			enemyData.SetData(selectedEnemy);
+			enemyData.SetData(selectedEnemy, healthMultiplier);
 
 			enemyData.Destroyed += (damageable) =>
 			{

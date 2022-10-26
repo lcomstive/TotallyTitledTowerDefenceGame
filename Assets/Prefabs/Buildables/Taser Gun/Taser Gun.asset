@@ -23,6 +23,7 @@ MonoBehaviour:
     m_Value: 20
     m_Unit: 0
   Description: Applies <color=#fffa69>electricity</color> to units hit
+  PlacedDownAudio: {fileID: 8300000, guid: febb1c94df16b034c96056c0db566a1f, type: 3}
   VisionRadius: 5.5
   ValidPlacementTags:
   - Terrain
@@ -35,4 +36,4 @@ MonoBehaviour:
   RestrictRotation: 0
   <Damage>k__BackingField: 0
   Element: 4
-  ElementTime: 0.2
+  ElementTime: 0.15

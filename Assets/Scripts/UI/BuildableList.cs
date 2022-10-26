@@ -39,6 +39,8 @@ public class BuildableList : MonoBehaviour
 		if(!btn)
 			return;
 
+		data.ResetData();
+
 		btn.SetData(data);
 		m_Buttons.Add(btn);
 	}

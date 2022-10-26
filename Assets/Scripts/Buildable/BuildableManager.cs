@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.EventSystems;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using GameAnalyticsSDK;
+using System.Threading.Tasks;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(MousePicker))]
 public class BuildableManager : MonoBehaviour
@@ -12,8 +10,6 @@ public class BuildableManager : MonoBehaviour
 	[SerializeField] private InputActionReference m_SelectInput;
 	[SerializeField] private bool m_PlacementSnapping = true;
 
-	public bool IsBuilding { get; private set; }
-	
 	/// <summary>
 	/// Time, in seconds, to ignore select/click input after placing a building.
 	/// This is to prevent immediately showing building info,
@@ -22,6 +18,12 @@ public class BuildableManager : MonoBehaviour
 	[Tooltip("Time, in milliseconds, to ignore select/click input after placing a building")]
 	[SerializeField] private int m_IgnoreSelectTimeAfterPlaced = 150;
 
+	[Header("Audio")]
+	[SerializeField] private AudioSource m_TowerPlaceAudioSource;
+	[SerializeField] private AudioSource m_TowerSellAudioSource;
+
+	public bool IsBuilding { get; private set; }
+	
 	/// <summary>
 	/// Instantiated preview of selected building
 	/// </summary>
@@ -75,6 +77,8 @@ public class BuildableManager : MonoBehaviour
 	public void RefundBuilding(BuildableData data)
 	{
 		m_PlayerData.Currency += data.SellValue;
+
+		m_TowerSellAudioSource?.Play();
 
 		// Update analytics
 		GameAnalytics.NewDesignEvent($"buildable:sell:{m_Selected.name}");
@@ -131,6 +135,10 @@ public class BuildableManager : MonoBehaviour
 
 			// Reset state
 			Deselect();
+
+			// Play audio clip
+			if(m_TowerPlaceAudioSource && m_Selected.PlacedDownAudio)
+				m_TowerPlaceAudioSource.PlayOneShot(m_Selected.PlacedDownAudio);
 
 			// Update analytics
 			GameAnalytics.NewDesignEvent($"buildable:buy:{m_Selected.name}");

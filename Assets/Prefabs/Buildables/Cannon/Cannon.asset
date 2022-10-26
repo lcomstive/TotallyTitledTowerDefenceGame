@@ -24,6 +24,7 @@ MonoBehaviour:
     m_Unit: 0
   Description: Shoots <color=#ff6969>fire</color> projectiles that apply damage over
     time
+  PlacedDownAudio: {fileID: 8300000, guid: febb1c94df16b034c96056c0db566a1f, type: 3}
   VisionRadius: 7
   ValidPlacementTags:
   - Terrain

@@ -29,4 +29,21 @@ public class TurretData : BuildableData, IDamageDealer
 
 	[Tooltip("How long to apply Element, in seconds")]
 	public float ElementTime = 1.0f;
+
+	public override string DescriptionAdditional
+	{
+		get
+		{
+			string value = $"Damage: {Damage}";
+			if (Element == Elements.Fire)
+				value += "/tick";
+			value += $" | Fire Rate: {FireRate}/s";
+			if(Element != Elements.Ground)
+				value += $" | Element applied for {ElementTime}s";
+			value += $"\n<color=#9c9c9c>Total Unit Kills: {KillCount}</color>";
+			return value;
+		}
+	}
+
+	public override void ResetData() => KillCount = 0;
 }

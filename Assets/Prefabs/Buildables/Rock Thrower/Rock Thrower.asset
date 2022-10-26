@@ -20,19 +20,20 @@ MonoBehaviour:
     m_Value: 10
     m_Unit: 0
   SellValue:
-    m_Value: 6
+    m_Value: 8
     m_Unit: 0
   Description: Applies damage, and <color=#b56936>grounds</color> units hit
+  PlacedDownAudio: {fileID: 8300000, guid: febb1c94df16b034c96056c0db566a1f, type: 3}
   VisionRadius: 7
   ValidPlacementTags:
   - Terrain
   SpawnOffset: {x: 0, y: 0.15, z: 0}
   BulletPrefab: {fileID: 4810917858265246603, guid: 953aebdcf1e0a234ca667fa841648545,
     type: 3}
-  FireRate: 3.5
-  BulletVelocity: 3.2
+  FireRate: 2.5
+  BulletVelocity: 3
   RotationSpeed: 15
   RestrictRotation: 0
-  <Damage>k__BackingField: 3
+  <Damage>k__BackingField: 2.5
   Element: 5
   ElementTime: 0.1

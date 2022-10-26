@@ -23,6 +23,7 @@ MonoBehaviour:
     m_Value: 30
     m_Unit: 0
   Description: Applies <color=#b8d3ff>ice</color> to units within range
+  PlacedDownAudio: {fileID: 8300000, guid: febb1c94df16b034c96056c0db566a1f, type: 3}
   VisionRadius: 5
   ValidPlacementTags:
   - Terrain
