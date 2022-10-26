@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4d4a3c12a09b28439c750b27c72b6c2, type: 3}
   m_Name: Player Data
   m_EditorClassIdentifier: 
-  Lives: 8
+  Lives: 10
   Currency:
-    m_Value: 21
-    m_Unit: 2
+    m_Value: 34.943
+    m_Unit: 1

@@ -19,24 +19,24 @@ public enum CurrencyUnit : byte
 [Serializable]
 public struct Currency
 {
-	[SerializeField] private int m_Value;
+	[SerializeField] private float m_Value;
 	[SerializeField] private CurrencyUnit m_Unit;
 
 	private static readonly Dictionary<CurrencyUnit, char> m_UnitChars = new Dictionary<CurrencyUnit, char>()
 	{
-		{ CurrencyUnit.None,		' ' },
-		{ CurrencyUnit.Billion,		'B' },
-		{ CurrencyUnit.Million,		'M' },
-		{ CurrencyUnit.Thousand,	'K' },
-		{ CurrencyUnit.Trillion,	'T' },
+		{ CurrencyUnit.None,        ' ' },
+		{ CurrencyUnit.Billion,     'B' },
+		{ CurrencyUnit.Million,     'M' },
+		{ CurrencyUnit.Thousand,    'K' },
+		{ CurrencyUnit.Trillion,    'T' },
 	};
 
-	public int Value
+	public float Value
 	{
 		get => m_Value;
 		set
 		{
-			if(m_Value == value)
+			if (m_Value == value)
 				return; // No change
 
 			m_Value = value;
@@ -50,7 +50,7 @@ public struct Currency
 		get => m_Unit;
 		set
 		{
-			if(m_Unit == value)
+			if (m_Unit == value)
 				return; // No change
 
 			m_Unit = value;
@@ -73,30 +73,43 @@ public struct Currency
 		Validate();
 	}
 
-	public string DisplayValue()
-	{
-		Validate();
-		return m_Value.ToString() + m_UnitChars[m_Unit];
-	}
+	public string DisplayValue() => string.Format(m_Unit == CurrencyUnit.None ? "{0:0}" : "{0:0.0}", m_Value) + m_UnitChars[m_Unit];
 
 	private const CurrencyUnit MaxUnit = CurrencyUnit.Trillion;
 	public void Validate()
 	{
-		while(m_Value > 1000 && m_Unit < MaxUnit)
+		// Increment value
+		while (m_Value > 1000 && m_Unit < MaxUnit)
 		{
-			m_Value /= 1000;
+			m_Value /= 1000.0f;
 			m_Unit++;
 		}
 
-		if(m_Value < 0 && m_Unit > 0) // Decrement unit
+		// Decrement value
+		while (m_Value < 0 && m_Unit > 0)
 		{
-			m_Value += 1000;
+			m_Value += 1000.0f;
 			m_Unit--;
 		}
-		if(m_Value >= 1000 && m_Unit == MaxUnit) // At absolute maximum value
+
+		// At absolute maximum value
+		if (m_Value >= 1000 && m_Unit == MaxUnit)
 			m_Value = 999;
-		if(m_Value < 0 && m_Unit == 0) // Don't allow negative values if no currency unit
+
+		// Don't allow negative values if no currency unit
+		if (m_Value < 0 && m_Unit == 0)
 			m_Value = 0;
+	}
+
+	private Currency Reset(int newValue)
+	{
+		m_Value = newValue;
+		m_Unit = CurrencyUnit.None;
+		Validate();
+
+		ValueChanged?.Invoke(this);
+
+		return this;
 	}
 
 	public override int GetHashCode() => ((int)this).GetHashCode();
@@ -108,18 +121,14 @@ public struct Currency
 
 	#region Operator Overloading
 	// Operations
-	public static Currency operator +(Currency a, Currency b) { a.Value += b.Value; return a; }
-	public static Currency operator -(Currency a, Currency b) { a.Value -= b.Value; return a; }
-	public static Currency operator *(Currency a, Currency b) { a.Value *= b.Value; return a; }
-	public static Currency operator /(Currency a, Currency b) { a.Value /= b.Value; return a; }
-
-	public static Currency operator +(Currency a, int b) { a.Value += b; return a; }
-	public static Currency operator -(Currency a, int b) { a.Value -= b; return a; }
-	public static Currency operator *(Currency a, int b) { a.Value *= b; return a; }
-	public static Currency operator /(Currency a, int b) { a.Value /= b; return a; }
+	public static Currency operator +(Currency a, Currency b) => a.Reset((int)a + (int)b);
+	public static Currency operator -(Currency a, Currency b) => a.Reset((int)a - (int)b);
+	public static Currency operator *(Currency a, Currency b) => a.Reset((int)a * (int)b);
+	public static Currency operator /(Currency a, Currency b) => a.Reset((int)a / (int)b);
 
 	// Conversion
-	public static explicit operator int(Currency a) => a.m_Value * (int)MathF.Pow(1000, (int)a.m_Unit);
+	public static implicit operator Currency(int value) => new Currency(value);
+	public static explicit operator float(Currency a) => a.m_Value * MathF.Pow(1000, (int)a.m_Unit);
 
 	// Comparisons
 	public static bool operator <(Currency a, Currency b) => (int)a < (int)b;
