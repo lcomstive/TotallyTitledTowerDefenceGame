@@ -1,6 +1,7 @@
 /// <see cref="Water"/>
 ///		- Is primarily used to amplify other elements (e.g. ice, electricity)
 ///		- Removes fire element
+///		- Reduces duration of acid element
 ///	<see cref="Ice"/>
 ///		- Slows affected unit, this effect compounds
 ///		- Consumes water element

@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
 public class PlayButton : MonoBehaviour
 {
 	[SerializeField] private PlayerData m_PlayerData;
+	[SerializeField] private InputActionReference m_PlayInput;
 
 	[Header("Visuals")]
 	[SerializeField] private Image m_PlayImage;
@@ -43,12 +45,21 @@ public class PlayButton : MonoBehaviour
 
 		// Set initial button state
 		OnGameStateChanged(m_PlayerData.GameState, m_PlayerData.GameState);
+
+		// Listen to key to toggle button
+		if(m_PlayInput)
+			m_PlayInput.action.started += OnPlayInput;
 	}
 
 	private void OnDestroy()
 	{
 		m_PlayerData.OnStateChanged -= OnGameStateChanged;
+
+		if (m_PlayInput)
+			m_PlayInput.action.started -= OnPlayInput;
 	}
+
+	private void OnPlayInput(InputAction.CallbackContext obj) => m_Button.onClick.Invoke();
 
 	private void OnGameStateChanged(PlayState oldValue, PlayState value)
 	{

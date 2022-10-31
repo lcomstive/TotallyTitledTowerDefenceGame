@@ -8,6 +8,12 @@ public class BuildableManager : MonoBehaviour
 {
 	[SerializeField] private PlayerData m_PlayerData;
 	[SerializeField] private InputActionReference m_SelectInput;
+
+	[Tooltip("When pressed, deselects current building")]
+	[SerializeField] private InputActionReference m_DeselectInput;
+
+	[Tooltip("When modifier is held, placing a tower leaves the currently selected building, so multiple of the same can be placed quickly")]
+	[SerializeField] private InputActionReference m_PlacementModifier;
 	[SerializeField] private bool m_PlacementSnapping = true;
 
 	/// <summary>
@@ -23,7 +29,7 @@ public class BuildableManager : MonoBehaviour
 	[SerializeField] private AudioSource m_TowerSellAudioSource;
 
 	public bool IsBuilding { get; private set; }
-	
+
 	/// <summary>
 	/// Instantiated preview of selected building
 	/// </summary>
@@ -38,6 +44,7 @@ public class BuildableManager : MonoBehaviour
 	private void LateUpdate()
 	{
 		bool selectPressed = m_SelectInput.action.IsPressed();
+		bool deselectPressed = m_DeselectInput.action.IsPressed();
 
 		if (!IsBuilding)
 			return;
@@ -47,7 +54,7 @@ public class BuildableManager : MonoBehaviour
 			) // Update build preview. Also handles spawning buildable from preview
 			PlaceBuilding(Picker.RayHit.point);
 
-		if (Picker.RayHit.collider == null && selectPressed)
+		if ((Picker.RayHit.collider == null && selectPressed) || deselectPressed)
 			Deselect();
 	}
 
@@ -67,7 +74,7 @@ public class BuildableManager : MonoBehaviour
 
 		IsBuilding = false;
 
-		if(m_NewBuildingPreview)
+		if (m_NewBuildingPreview)
 		{
 			Destroy(m_NewBuildingPreview);
 			m_NewBuildingPreview = null;
@@ -87,6 +94,8 @@ public class BuildableManager : MonoBehaviour
 
 	private async void PlaceBuilding(Vector3 point)
 	{
+		bool modifierHeld = m_PlacementModifier.action.IsPressed();
+
 		// Spawn preview object if it doesn't exist
 		if (!m_NewBuildingPreview)
 		{
@@ -96,7 +105,7 @@ public class BuildableManager : MonoBehaviour
 				m_Selected.PreviewPrefab.transform.rotation
 			);
 			BuildableInfo newInfo = m_NewBuildingPreview.GetComponent<BuildableInfo>();
-			if(!newInfo)
+			if (!newInfo)
 				newInfo = m_NewBuildingPreview.AddComponent<BuildableInfo>();
 			newInfo.Data = m_Selected;
 			newInfo.ShowRadius(true);
@@ -104,7 +113,7 @@ public class BuildableManager : MonoBehaviour
 
 		// Set preview position
 		Vector3 desiredPosition = point;
-		if(m_PlacementSnapping)
+		if (m_PlacementSnapping)
 		{
 			desiredPosition.x = Mathf.Round(desiredPosition.x);
 			desiredPosition.z = Mathf.Round(desiredPosition.z);
@@ -114,19 +123,23 @@ public class BuildableManager : MonoBehaviour
 
 		if (m_SelectInput.action.IsPressed())
 		{
-			// User has clicked, wanting to place buildable
-			// Destroy preview
-			Destroy(m_NewBuildingPreview);
-			m_NewBuildingPreview = null;
+			if (!modifierHeld)
+			{
+				// User has placed building
+				// Destroy preview
+				Destroy(m_NewBuildingPreview);
+
+				m_NewBuildingPreview = null;
+			}
 
 			// Spawn buildable
 			GameObject go = Instantiate(
 				m_Selected.Prefab,
 				desiredPosition,
 				m_Selected.Prefab.transform.rotation
-			);
+				);
 			BuildableInfo buildInfo = go.GetComponent<BuildableInfo>();
-			if(!buildInfo)
+			if (!buildInfo)
 				buildInfo = go.AddComponent<BuildableInfo>();
 			buildInfo.Data = m_Selected;
 
@@ -134,10 +147,11 @@ public class BuildableManager : MonoBehaviour
 			m_PlayerData.Currency -= m_Selected.Cost;
 
 			// Reset state
-			Deselect();
+			if(!modifierHeld || m_PlayerData.Currency < m_Selected.Cost)
+				Deselect();
 
 			// Play audio clip
-			if(m_TowerPlaceAudioSource && m_Selected.PlacedDownAudio)
+			if (m_TowerPlaceAudioSource && m_Selected.PlacedDownAudio)
 				m_TowerPlaceAudioSource.PlayOneShot(m_Selected.PlacedDownAudio);
 
 			// Update analytics
@@ -146,6 +160,6 @@ public class BuildableManager : MonoBehaviour
 		}
 
 		await Task.Delay(m_IgnoreSelectTimeAfterPlaced);
-		Picker.CanSelect = true;
+		Picker.CanSelect = !modifierHeld;
 	}
 }

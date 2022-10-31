@@ -6416,6 +6416,10 @@ MonoBehaviour:
   m_PlayerData: {fileID: 11400000, guid: ef9c70ac6ecb511449274b3d82161b69, type: 2}
   m_SelectInput: {fileID: -2984964002410258444, guid: 457265c772102164f8424cefbe0c84a1,
     type: 3}
+  m_DeselectInput: {fileID: 5984807788549300562, guid: 457265c772102164f8424cefbe0c84a1,
+    type: 3}
+  m_PlacementModifier: {fileID: 4187196460987866664, guid: 457265c772102164f8424cefbe0c84a1,
+    type: 3}
   m_PlacementSnapping: 1
   m_IgnoreSelectTimeAfterPlaced: 0
   m_TowerPlaceAudioSource: {fileID: 907200773}
@@ -17964,6 +17968,12 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 406627855}
+    - target: {fileID: 6350222299458419959, guid: 0a7d78b54277b704a8e1c41f6f7de457,
+        type: 3}
+      propertyPath: m_PlayInput
+      value: 
+      objectReference: {fileID: 4385954040555146962, guid: 457265c772102164f8424cefbe0c84a1,
+        type: 3}
     - target: {fileID: 6350222299617378180, guid: 0a7d78b54277b704a8e1c41f6f7de457,
         type: 3}
       propertyPath: m_Name

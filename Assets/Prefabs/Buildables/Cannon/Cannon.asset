@@ -35,6 +35,6 @@ MonoBehaviour:
   BulletVelocity: 1.7
   RotationSpeed: 9
   RestrictRotation: 0
-  <Damage>k__BackingField: 0.5
+  <Damage>k__BackingField: 1
   Element: 2
   ElementTime: 2
