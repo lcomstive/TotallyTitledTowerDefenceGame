@@ -25,10 +25,10 @@ public class BuildableButton : MonoBehaviour
 		}
 	}
 
-	public void SetData(BuildableData data)
+	public void SetData(BuildableData data, BuildableManager manager)
 	{
 		Data = data;
-		m_Manager = FindObjectOfType<BuildableManager>();
+		m_Manager = manager;
 
 		UpdateValues();
 		ShowDescriptionText(false);

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using System.Collections.Generic;
 
 public class BuildableList : MonoBehaviour
@@ -7,10 +8,16 @@ public class BuildableList : MonoBehaviour
 	[SerializeField] private GameObject m_UIPrefab;
 	[SerializeField] private PlayerData m_PlayerData;
 
+	[SerializeField]
+	private InputActionReference[] m_SelectInputs;
+
+	private BuildableManager m_Manager;
 	private List<BuildableButton> m_Buttons = new List<BuildableButton>();
 
 	private void Start()
 	{
+		m_Manager = FindObjectOfType<BuildableManager>();
+
 		if(!m_PlayerData)
 		{
 			Debug.LogError($"Player data is not set in '{name}' BuildableList");
@@ -27,6 +34,30 @@ public class BuildableList : MonoBehaviour
 
 	private void OnDestroy() => m_PlayerData.Currency.ValueChanged -= PlayerCurrencyChanged;
 
+	private void OnEnable()
+	{
+		for (int i = 0; i < m_SelectInputs.Length; i++)
+		{
+			int buildingIndex = i;
+			m_SelectInputs[i].action.started += (_) => SelectBuilding(buildingIndex);
+		}
+	}
+
+	private void OnDisable()
+	{
+		for (int i = 0; i < m_SelectInputs.Length; i++)
+		{
+			int buildingIndex = i;
+			m_SelectInputs[i].action.started -= (_) => SelectBuilding(buildingIndex);
+		}
+	}
+
+	private void SelectBuilding(int index)
+	{
+		m_Manager.Deselect();
+		m_Buttons[Mathf.Clamp(index, 0, m_Buttons.Count - 1)].OnClick();
+	}
+
 	private void PlayerCurrencyChanged(Currency available)
 	{
 		foreach(BuildableButton button in m_Buttons)
@@ -41,7 +72,7 @@ public class BuildableList : MonoBehaviour
 
 		data.ResetData();
 
-		btn.SetData(data);
+		btn.SetData(data, m_Manager);
 		m_Buttons.Add(btn);
 	}
 }

@@ -1145,7 +1145,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PlayerData: {fileID: 11400000, guid: ef9c70ac6ecb511449274b3d82161b69, type: 2}
-  m_PlayInput: {fileID: 0}
+  m_PlayInput: {fileID: 4385954040555146962, guid: 457265c772102164f8424cefbe0c84a1,
+    type: 3}
   m_PlayImage: {fileID: 6350222298736502935}
   m_PlaySprite: {fileID: 21300000, guid: dfeaf7684965eb145b098f1ce28660f0, type: 3}
   m_Play2xSprite: {fileID: 21300000, guid: bba9d0845a0f696488811985eaa54755, type: 3}
@@ -1586,6 +1587,16 @@ MonoBehaviour:
   m_UIPrefab: {fileID: 7973850175107796328, guid: 316817d931c8e9e4880963506bff913e,
     type: 3}
   m_PlayerData: {fileID: 11400000, guid: ef9c70ac6ecb511449274b3d82161b69, type: 2}
+  m_SelectInputs:
+  - {fileID: 7812096773096731471, guid: 457265c772102164f8424cefbe0c84a1, type: 3}
+  - {fileID: 7245820894374318023, guid: 457265c772102164f8424cefbe0c84a1, type: 3}
+  - {fileID: 6897603798731835877, guid: 457265c772102164f8424cefbe0c84a1, type: 3}
+  - {fileID: -7263373415840270249, guid: 457265c772102164f8424cefbe0c84a1, type: 3}
+  - {fileID: 8389984831823619321, guid: 457265c772102164f8424cefbe0c84a1, type: 3}
+  - {fileID: 8448635237338774228, guid: 457265c772102164f8424cefbe0c84a1, type: 3}
+  - {fileID: 9096788836489228141, guid: 457265c772102164f8424cefbe0c84a1, type: 3}
+  - {fileID: -253997356934263041, guid: 457265c772102164f8424cefbe0c84a1, type: 3}
+  - {fileID: -4591175812268841509, guid: 457265c772102164f8424cefbe0c84a1, type: 3}
 --- !u!1 &6350222300024959107
 GameObject:
   m_ObjectHideFlags: 0

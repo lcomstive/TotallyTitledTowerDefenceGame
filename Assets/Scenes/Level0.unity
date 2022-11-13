@@ -7024,33 +7024,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 100b0ee8275af59429833503fd7c7eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  From: {x: 0, y: 0, z: 0}
-  Target: {x: 0.75, y: 0.05, z: 1}
-  SpeedCurve:
+  UseUnscaledTime: 0
+  Curve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 3.2161233
-      outSlope: 3.2161233
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.045833334
+      outWeight: 0
     - serializedVersion: 3
-      time: 0.5
+      time: 1
       value: 1
-      inSlope: 0.10354353
-      outSlope: 0.10354353
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.34166664
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  UseUnscaledTime: 0
+  ActivateWithObject: 0
+  From: {x: 0, y: 0, z: 0}
+  Target: {x: 0.75, y: 0.05, z: 1}
   ApplyFromAtStart: 1
 --- !u!1 &797970649
 GameObject:
@@ -17968,12 +17969,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 406627855}
-    - target: {fileID: 6350222299458419959, guid: 0a7d78b54277b704a8e1c41f6f7de457,
-        type: 3}
-      propertyPath: m_PlayInput
-      value: 
-      objectReference: {fileID: 4385954040555146962, guid: 457265c772102164f8424cefbe0c84a1,
-        type: 3}
     - target: {fileID: 6350222299617378180, guid: 0a7d78b54277b704a8e1c41f6f7de457,
         type: 3}
       propertyPath: m_Name
