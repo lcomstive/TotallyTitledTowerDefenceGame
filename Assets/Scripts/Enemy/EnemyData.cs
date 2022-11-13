@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class EnemyData : MonoBehaviour, IDamageable
@@ -11,6 +12,9 @@ public class EnemyData : MonoBehaviour, IDamageable
 
 	[field: SerializeField]
 	public float MaxHealth { get; private set; } = 10.0f;
+
+	[SerializeField]
+	private GameObject m_DamageTextPrefab;
 
 	private IModifierHolder m_ModifierHolder;
 
@@ -30,7 +34,7 @@ public class EnemyData : MonoBehaviour, IDamageable
 
 	public void ApplyDamage(float damage)
 	{
-		damage = CalculateDamage(damage);
+		damage = CalculateDamage(damage, null);
 		m_Health -= damage;
 		Damaged?.Invoke(damage, null);
 
@@ -41,9 +45,9 @@ public class EnemyData : MonoBehaviour, IDamageable
 		}
 	}
 	
-	public void ApplyDamage(IDamageDealer dealer)
+	public void ApplyDamage(IDamageDealer dealer, IUpgradeable upgradeable)
 	{
-		float damage = CalculateDamage(dealer.Damage);
+		float damage = CalculateDamage(dealer.Damage, upgradeable);
 		m_Health -= damage;
 		Damaged?.Invoke(damage, dealer);
 
@@ -54,10 +58,16 @@ public class EnemyData : MonoBehaviour, IDamageable
 		}
 	}
 
-	private float CalculateDamage(float initialValue)
+	private float CalculateDamage(float initialValue, IUpgradeable upgradeable)
 	{
+		// Apply damage multiplier from upgrades
+		float damageMultiplier = upgradeable?.ValueForCurrentUpgrade(UpgradeType.DamageMultiplier) ?? 1.0f;
+		initialValue *= damageMultiplier;
+
+		// Apply acid modifier, if present
 		if (m_ModifierHolder != null && m_ModifierHolder.HasElement(Elements.Acid))
 			initialValue *= Data.AcidMultiplier;
+
 		return initialValue;
 	}
 

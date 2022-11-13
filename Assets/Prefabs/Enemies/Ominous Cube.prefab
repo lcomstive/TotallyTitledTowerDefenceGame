@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 533031535371747840}
   - component: {fileID: 9196109399050611262}
   - component: {fileID: 1833403253302066257}
+  - component: {fileID: 3737139626195143664}
   m_Layer: 0
   m_Name: Ominous Cube
   m_TagString: Enemy
@@ -308,6 +309,20 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   m_FlashColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &3737139626195143664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533031535371747847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae814e78cbd2a64d833f2a5ae1d4920, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TextPrefab: {fileID: 899013121564589018, guid: 15150ff5bfba7f24da17da999bf81654,
+    type: 3}
 --- !u!1001 &4637763777427932100
 PrefabInstance:
   m_ObjectHideFlags: 0

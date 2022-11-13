@@ -8282,6 +8282,10 @@ MonoBehaviour:
   m_PlayerData: {fileID: 11400000, guid: ef9c70ac6ecb511449274b3d82161b69, type: 2}
   m_SelectInput: {fileID: -2984964002410258444, guid: 457265c772102164f8424cefbe0c84a1,
     type: 3}
+  m_DeselectInput: {fileID: 5984807788549300562, guid: 457265c772102164f8424cefbe0c84a1,
+    type: 3}
+  m_PlacementModifier: {fileID: 4187196460987866664, guid: 457265c772102164f8424cefbe0c84a1,
+    type: 3}
   m_PlacementSnapping: 1
   m_IgnoreSelectTimeAfterPlaced: 0
   m_TowerPlaceAudioSource: {fileID: 1066738236}

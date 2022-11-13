@@ -10,6 +10,6 @@ public class ColdZoneAoE : AoE
 		base.Start();
 
 		var shape = m_SnowParticleSystem.shape;
-		shape.scale = Vector3.one * m_Data.GetVisionRadius(transform.position.y) / 2.0f;
+		shape.scale = Vector3.one * Data.GetVisionRadius(transform.position.y) / 2.0f;
 	}
 }

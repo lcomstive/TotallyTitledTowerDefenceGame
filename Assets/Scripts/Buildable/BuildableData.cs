@@ -21,7 +21,7 @@ public class BuildableData : ScriptableObject
 	public virtual string DescriptionAdditional => string.Empty;
 
 	[SerializeField]
-	private float VisionRadius = 1.0f;
+	public UpgradePath VisionRadius = new UpgradePath();
 
 	[Tooltip("Valid tags of objects in the level that this object can be placed on")]
 	public List<string> ValidPlacementTags = new List<string>() { "Terrain" };
@@ -34,7 +34,7 @@ public class BuildableData : ScriptableObject
 	/// Gets the total vision radius this buildable has
 	/// </summary>
 	/// <param name="transformY">Y value of the buildable transform</param>
-	public float GetVisionRadius(float transformY) => VisionRadius * Mathf.Max(1.0f, 0.5f + transformY / 2.0f);
+	public float GetVisionRadius(float transformY, int upgradeValue = 0) => VisionRadius.Values.Evaluate(upgradeValue) * Mathf.Max(1.0f, 0.5f + transformY / 2.0f);
 
 	/// <summary>
 	/// Called at the start of each level.

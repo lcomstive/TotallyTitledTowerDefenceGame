@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Turret", menuName = "Custom/Buildable/Turret")]
@@ -7,7 +8,7 @@ public class TurretData : BuildableData, IDamageDealer
 	public GameObject BulletPrefab;
 
 	[Tooltip("Shots per seconds")]
-	public float FireRate = 2.0f;
+	public UpgradePath FireRate = new UpgradePath();
 
 	public float BulletVelocity = 10.0f;
 
@@ -19,6 +20,8 @@ public class TurretData : BuildableData, IDamageDealer
 
 	[field: SerializeField]
 	public float Damage { get; private set; } = 1.0f;
+
+	public UpgradePath DamageMultiplier = new UpgradePath();
 
 	public int KillCount { get; set; } = 0;
 

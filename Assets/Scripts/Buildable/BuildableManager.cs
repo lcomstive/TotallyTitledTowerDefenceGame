@@ -56,6 +56,9 @@ public class BuildableManager : MonoBehaviour
 
 		if ((Picker.RayHit.collider == null && selectPressed) || deselectPressed)
 			Deselect();
+
+		if (m_NewBuildingPreview && m_NewBuildingPreview.TryGetComponent(out BuildableInfo buildableInfo))
+			buildableInfo.ShowRadius(true); // Update vision radius
 	}
 
 	public void StartBuilding(BuildableData data)

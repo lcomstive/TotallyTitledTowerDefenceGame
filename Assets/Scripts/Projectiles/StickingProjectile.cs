@@ -10,7 +10,7 @@ public class StickingProjectile : Projectile
 		// Apply damage
 		TurretData turretData = Shooter.Data as TurretData;
 		if (turretData && other.TryGetComponent(out IDamageable damageable))
-			damageable.ApplyDamage(turretData);
+			damageable.ApplyDamage(turretData, Shooter.GetComponent<IUpgradeable>());
 
 		StartCoroutine(SlowEnemy(other.GetComponent<IModifierHolder>(), other.transform));
 	}

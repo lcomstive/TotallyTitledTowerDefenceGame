@@ -12,22 +12,23 @@ public class BuildableInfo : MonoBehaviour
 
 	public int KillCount = 0;
 
-	private void Awake() => ShowRadius(m_ShowRadius);
+	public bool IsRadiusShowing => m_RadiusPreviewProjector.gameObject.activeInHierarchy;
 
-#if UNITY_EDITOR
-	private void Update()
+	private IUpgradeable m_Upgradeable;
+
+	public int VisionRadiusUpgradeLevel => m_Upgradeable?.GetCurrentUpgradeLevel(UpgradeType.VisionRadius) ?? 0;
+
+	private void Awake()
 	{
-		float visionRadius = Data.GetVisionRadius(transform.position.y);
-		if(m_RadiusPreviewProjector)
-			m_RadiusPreviewProjector.size = new Vector3(visionRadius, visionRadius, m_RadiusPreviewProjector.size.z);
+		m_Upgradeable = GetComponent<IUpgradeable>();
+		ShowRadius(m_ShowRadius);
 	}
-#endif
 
 	public void ShowRadius(bool show)
 	{
 		if (!m_RadiusPreviewProjector)
 			return;
-		float visionRadius = Data.GetVisionRadius(transform.position.y);
+		float visionRadius = Data.GetVisionRadius(transform.position.y, VisionRadiusUpgradeLevel);
 
 		m_RadiusPreviewProjector.size = new Vector3(visionRadius, visionRadius, m_RadiusPreviewProjector.size.z);
 		m_RadiusPreviewProjector.gameObject.SetActive(show);

@@ -2006,20 +2006,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 100b0ee8275af59429833503fd7c7eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  From: {x: 0, y: 0, z: 0}
-  Target: {x: 1, y: 1, z: 1}
-  SpeedCurve:
+  UseUnscaledTime: 1
+  Curve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 13.867924
-      outSlope: 13.867924
+      inSlope: 10.127381
+      outSlope: 10.127381
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.041666668
+      outWeight: 0.041841004
     - serializedVersion: 3
       time: 0.2
       value: 1
@@ -2032,7 +2031,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  UseUnscaledTime: 1
+  ActivateWithObject: 0
+  From: {x: 0, y: 0, z: 0}
+  Target: {x: 1, y: 1, z: 1}
   ApplyFromAtStart: 1
 --- !u!114 &7687734213362304364
 MonoBehaviour:

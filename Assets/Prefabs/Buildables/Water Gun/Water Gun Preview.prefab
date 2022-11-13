@@ -168,6 +168,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8181374766459872525, guid: 1d333aa0b53b7504589897c071e9c42a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8662993030028942953, guid: 1d333aa0b53b7504589897c071e9c42a,
         type: 3}
       propertyPath: m_Layer
@@ -200,5 +205,6 @@ PrefabInstance:
     - {fileID: 7209785504839110183, guid: 1d333aa0b53b7504589897c071e9c42a, type: 3}
     - {fileID: 1270452544744564416, guid: 1d333aa0b53b7504589897c071e9c42a, type: 3}
     - {fileID: 7466575396497785894, guid: 1d333aa0b53b7504589897c071e9c42a, type: 3}
+    - {fileID: 8181374766459872525, guid: 1d333aa0b53b7504589897c071e9c42a, type: 3}
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d333aa0b53b7504589897c071e9c42a, type: 3}

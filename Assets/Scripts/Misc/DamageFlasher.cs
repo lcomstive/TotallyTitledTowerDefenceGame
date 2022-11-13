@@ -1,7 +1,5 @@
-using JetBrains.Annotations;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class DamageFlasher : MonoBehaviour
 {

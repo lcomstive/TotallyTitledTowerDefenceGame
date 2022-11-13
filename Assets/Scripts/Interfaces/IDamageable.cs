@@ -7,7 +7,7 @@ public interface IDamageable
 	public float MaxHealth { get; }
 
 	public void ApplyDamage(float damage);
-	public void ApplyDamage(IDamageDealer dealer);
+	public void ApplyDamage(IDamageDealer dealer, IUpgradeable upgradeable);
 
 	public delegate void OnDamaged(float amount, IDamageDealer dealer);
 	public event OnDamaged Damaged;

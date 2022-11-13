@@ -12,17 +12,17 @@ public class AoE : MonoBehaviour
 	[SerializeField, Tooltip("How long to apply Element, in seconds. <= 0 element remains on holder until leaving trigger")]
 	private float m_ElementTime = 1.0f;
 
-	protected BuildableData m_Data;
+	public BuildableData Data { get; protected set; }
 
 	private List<IModifierHolder> m_ModifiedUnits = new List<IModifierHolder>();
 
 	protected virtual void Start()
 	{
-		m_Data = GetComponent<BuildableInfo>().Data;
+		Data = GetComponent<BuildableInfo>().Data;
 
 		SphereCollider trigger = GetComponent<SphereCollider>();
 		trigger.isTrigger = true;
-		trigger.radius = m_Data.GetVisionRadius(transform.position.y);
+		trigger.radius = Data.GetVisionRadius(transform.position.y);
 		trigger.radius /= 2.0f; // Radius, not diameter
 	}
 

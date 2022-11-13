@@ -1,9 +1,9 @@
+using System;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.Events;
-using System.Threading.Tasks;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -12,7 +12,7 @@ using UnityEditor;
 [SelectionBase] // Select the object with this script instead of children
 [RequireComponent(typeof(BuildableInfo))]
 [RequireComponent(typeof(SphereCollider))]
-public class Turret : MonoBehaviour
+public class Turret : MonoBehaviour, IUpgradeable
 {
 	[SerializeField] private Transform m_Barrel;
 	[SerializeField] private string m_EnemyTag = "Enemy";
@@ -22,12 +22,18 @@ public class Turret : MonoBehaviour
 
 	[SerializeField, Tooltip("Where to spawn bullets")]
 	private Transform m_BarrelTip;
-	private BuildableInfo m_BuildableInfo;
 
 	[Space()]
 	[SerializeField]
 	private UnityEvent m_OnFired;
 
+	[Header("Upgrades")]
+	[SerializeField]
+	private PlayerData m_PlayerData;
+
+	public float FireRate => ValueForCurrentUpgrade(UpgradeType.FireRate);
+
+	private BuildableInfo m_BuildableInfo;
 	private Transform m_CurrentTarget = null;
 
 	/// <summary>
@@ -39,6 +45,7 @@ public class Turret : MonoBehaviour
 	private float m_ShootCooldown = 0.0f;
 	private Coroutine m_EnemyCheckRoutine = null;
 	private List<Transform> m_EnemiesInRange = new List<Transform>();
+	private Dictionary<UpgradeType, int> m_Upgrades = new Dictionary<UpgradeType, int>();
 
 	private void Start()
 	{
@@ -52,11 +59,11 @@ public class Turret : MonoBehaviour
 			return;
 		}
 
-		// Setup collider
-		SphereCollider collider = GetComponent<SphereCollider>();
-		collider.isTrigger = true;
-		collider.radius = transform.InverseTransformPoint(Vector3.one * m_Data.GetVisionRadius(transform.position.y)).x;
-		collider.radius /= 2.0f; // Radius, not diameter
+		// Add all upgrade types to m_Upgrades
+		foreach(var upgradeType in Enum.GetValues(typeof(UpgradeType)))
+			m_Upgrades.Add((UpgradeType)upgradeType, 0);
+
+		UpdateVisionRadius();
 
 		// Begin checking for enemies in radius
 		m_EnemyCheckRoutine = StartCoroutine(CheckEnemiesInRangeLoop());
@@ -70,7 +77,7 @@ public class Turret : MonoBehaviour
 
 	private void Update()
 	{
-		m_ShootCooldown = Mathf.Clamp(m_ShootCooldown - Time.deltaTime, 0, 1.0f / m_Data.FireRate);
+		m_ShootCooldown = Mathf.Clamp(m_ShootCooldown - Time.deltaTime, 0, 1.0f / FireRate);
 
 		if (m_CurrentTarget == null)
 			return;
@@ -104,9 +111,24 @@ public class Turret : MonoBehaviour
 			projectile.ElementTime = m_Data.ElementTime;
 		}
 
-		m_ShootCooldown = 1.0f / Mathf.Max(m_Data.FireRate, 0.1f);
+		m_ShootCooldown = 1.0f / Mathf.Max(FireRate, 0.1f);
 
 		m_OnFired?.Invoke();
+	}
+
+	private void UpdateVisionRadius()
+	{
+		int upgradeLevel = m_BuildableInfo.VisionRadiusUpgradeLevel;
+
+		// Setup trigger collider
+		SphereCollider collider = GetComponent<SphereCollider>();
+		collider.isTrigger = true;
+		collider.radius = transform.InverseTransformPoint(Vector3.one * m_Data.GetVisionRadius(transform.position.y, upgradeLevel)).x;
+		collider.radius /= 2.0f; // Radius, not diameter
+
+		// Update visuals
+		if(m_BuildableInfo.IsRadiusShowing)
+			m_BuildableInfo.ShowRadius(true);
 	}
 
 	private Transform ChooseTarget()
@@ -135,6 +157,44 @@ public class Turret : MonoBehaviour
 
 		m_EnemyCheckRoutine = StartCoroutine(CheckEnemiesInRangeLoop());
 	}
+
+	#region Upgrades
+	public bool HasUpgrade(UpgradeType type) => m_Upgrades[type] > 0;
+	public bool IsUpgradeMax(UpgradeType type) => m_Upgrades[type] >= GetPath(type).MaxUpgrades;
+
+	public Currency CostForNextUpgrade(UpgradeType type) => Mathf.RoundToInt(GetPath(type).Costs.Evaluate(m_Upgrades[type] + 1));
+
+	public bool CanAffordUpgrade(UpgradeType type) => CostForNextUpgrade(type) <= (m_PlayerData?.Currency ?? int.MaxValue);
+
+	public float ValueForCurrentUpgrade(UpgradeType type) => GetPath(type).Values.Evaluate(m_Upgrades[type]);
+	public float ValueForNextUpgrade(UpgradeType type) => GetPath(type).Values.Evaluate(m_Upgrades[type] + 1);
+
+	public void TryUpgrade(UpgradeType type)
+	{
+		if (!m_Upgrades.ContainsKey(type) || !CanAffordUpgrade(type) || IsUpgradeMax(type))
+			return;
+
+		m_PlayerData.Currency -= CostForNextUpgrade(type);
+		m_Upgrades[type]++;
+
+		if (type == UpgradeType.VisionRadius)
+			UpdateVisionRadius();
+	}
+
+	public int GetCurrentUpgradeLevel(UpgradeType type) => m_Upgrades.ContainsKey(type) ? m_Upgrades[type] : 0;
+
+	private UpgradePath GetPath(UpgradeType type)
+	{
+		switch(type)
+		{
+			case UpgradeType.FireRate: return m_Data.FireRate;
+			case UpgradeType.DamageMultiplier: return m_Data.DamageMultiplier;
+			case UpgradeType.VisionRadius: return m_Data.VisionRadius;
+			default:
+				return new UpgradePath();
+		}
+	}
+	#endregion
 
 #if UNITY_EDITOR
 	private void OnDrawGizmos()

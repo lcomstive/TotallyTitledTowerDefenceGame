@@ -21,7 +21,7 @@ public class BulletProjectile : Projectile
 		// Apply damage
 		TurretData turretData = Shooter.Data as TurretData;
 		if (turretData && other.TryGetComponent(out IDamageable damageable))
-			damageable.ApplyDamage(turretData);
+			damageable.ApplyDamage(turretData, Shooter.GetComponent<IUpgradeable>());
 
 		// Apply element
 		if (other.TryGetComponent(out IModifierHolder modifierHolder))

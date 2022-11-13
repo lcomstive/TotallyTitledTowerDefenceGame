@@ -1145,6 +1145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PlayerData: {fileID: 11400000, guid: ef9c70ac6ecb511449274b3d82161b69, type: 2}
+  m_PlayInput: {fileID: 0}
   m_PlayImage: {fileID: 6350222298736502935}
   m_PlaySprite: {fileID: 21300000, guid: dfeaf7684965eb145b098f1ce28660f0, type: 3}
   m_Play2xSprite: {fileID: 21300000, guid: bba9d0845a0f696488811985eaa54755, type: 3}
