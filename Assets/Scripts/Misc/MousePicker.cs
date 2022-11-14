@@ -25,6 +25,7 @@ public class MousePicker : MonoBehaviour
 	/// </summary>
 	public bool IsObjectSelected => Selected != null;
 
+	[field: SerializeField] // <------------- TEMP ------------------>
 	public bool CanSelect { get; set; } = true;
 
 	private RaycastHit m_RayHit;

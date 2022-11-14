@@ -163,6 +163,6 @@ public class BuildableManager : MonoBehaviour
 		}
 
 		await Task.Delay(m_IgnoreSelectTimeAfterPlaced);
-		Picker.CanSelect = !modifierHeld;
+		Picker.CanSelect = IsBuilding ? !modifierHeld : true;
 	}
 }

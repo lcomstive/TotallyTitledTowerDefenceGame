@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public enum UpgradeType
+public enum UpgradeType : int
 {
 	DamageMultiplier,
 	FireRate,
