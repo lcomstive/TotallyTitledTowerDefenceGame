@@ -26,7 +26,6 @@ MonoBehaviour:
     to units hit
   PlacedDownAudio: {fileID: 8300000, guid: febb1c94df16b034c96056c0db566a1f, type: 3}
   VisionRadius:
-    Name: VisionRadius
     Values:
       serializedVersion: 2
       m_Curve:
@@ -90,7 +89,6 @@ MonoBehaviour:
   BulletPrefab: {fileID: 4810917858265246603, guid: bc4178c746879104a99662f4752fb0bd,
     type: 3}
   FireRate:
-    Name: FireRate
     Values:
       serializedVersion: 2
       m_Curve:
@@ -151,9 +149,8 @@ MonoBehaviour:
   BulletVelocity: 7
   RotationSpeed: 10
   RestrictRotation: 0
-  <Damage>k__BackingField: 0
+  <Damage>k__BackingField: 1.8
   DamageMultiplier:
-    Name: Damage
     Values:
       serializedVersion: 2
       m_Curve:

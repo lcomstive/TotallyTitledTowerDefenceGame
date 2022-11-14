@@ -25,7 +25,6 @@ MonoBehaviour:
   Description: Applies damage, and <color=#639cf7>water</color> to units hit
   PlacedDownAudio: {fileID: 8300000, guid: febb1c94df16b034c96056c0db566a1f, type: 3}
   VisionRadius:
-    Name: VisionRadius
     Values:
       serializedVersion: 2
       m_Curve:
@@ -89,7 +88,6 @@ MonoBehaviour:
   BulletPrefab: {fileID: 4810917858265246603, guid: 77ad7b2daa94cf1448b95747df5a4619,
     type: 3}
   FireRate:
-    Name: 
     Values:
       serializedVersion: 2
       m_Curve:
@@ -150,9 +148,8 @@ MonoBehaviour:
   BulletVelocity: 3
   RotationSpeed: 13
   RestrictRotation: 0
-  <Damage>k__BackingField: 2
+  <Damage>k__BackingField: 2.5
   DamageMultiplier:
-    Name: Damage
     Values:
       serializedVersion: 2
       m_Curve:

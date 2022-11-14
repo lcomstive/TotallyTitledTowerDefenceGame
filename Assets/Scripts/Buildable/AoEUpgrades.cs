@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(AoE))]
@@ -50,6 +47,9 @@ public class AoEUpgrades : MonoBehaviour, IUpgradeable
 		collider.isTrigger = true;
 		collider.radius = transform.InverseTransformPoint(Vector3.one * m_Target.Data.GetVisionRadius(transform.position.y, m_UpgradeLevel)).x;
 		collider.radius /= 2.0f; // Radius, not diameter
+
+		if (TryGetComponent(out ColdZoneAoE coldZone))
+			coldZone.SetParticleSystemSize(m_UpgradeLevel);
 
 		// Update visuals
 		if (m_BuildableInfo && m_BuildableInfo.IsRadiusShowing)

@@ -40,7 +40,7 @@ public class TurretData : BuildableData, IDamageDealer
 			string value = $"Damage: {Damage}";
 			if (Element == Elements.Fire)
 				value += "/tick";
-			value += $" | Fire Rate: {FireRate}/s";
+			value += $" | Fire Rate: {FireRate.ValueForUpgrade(0)}/s";
 			if(Element != Elements.Ground)
 				value += $" | Element applied for {ElementTime}s";
 			value += $"\n<color=#9c9c9c>Total Unit Kills: {KillCount}</color>";

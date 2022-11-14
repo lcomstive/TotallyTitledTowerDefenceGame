@@ -37,11 +37,15 @@ public class UpgradeUI : MonoBehaviour
 
 	public void RefreshUI()
 	{
-		for(int i = 0; i < m_Buttons.Length; i++)
+		for (int i = 0; i < m_Buttons.Length; i++)
 		{
 			UpgradeType type = m_Buttons[i].Upgrade;
 			m_Buttons[i].CostText.text = $"${m_Upgradeable.CostForNextUpgrade(type)}";
-			m_Buttons[i].ValueText.text = $"{m_Upgradeable.ValueForCurrentUpgrade(type)} -> {m_Upgradeable.ValueForNextUpgrade(type)}";
+
+			if (type != UpgradeType.DamageMultiplier)
+				m_Buttons[i].ValueText.text = $"{m_Upgradeable.ValueForCurrentUpgrade(type)} -> {m_Upgradeable.ValueForNextUpgrade(type)}";
+			else
+				m_Buttons[i].ValueText.text = $"{m_Upgradeable.ValueForCurrentUpgrade(type)}x -> {m_Upgradeable.ValueForNextUpgrade(type)}x";
 
 			if (m_Upgradeable.IsUpgradeMax(type))
 			{

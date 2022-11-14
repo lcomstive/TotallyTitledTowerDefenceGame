@@ -166,7 +166,7 @@ MonoBehaviour:
   BulletVelocity: 3
   RotationSpeed: 16
   RestrictRotation: 0
-  <Damage>k__BackingField: 0
+  <Damage>k__BackingField: 1
   DamageMultiplier:
     Values:
       serializedVersion: 2

@@ -113,15 +113,15 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 1
         value: 0.65
-        inSlope: 0.17500001
-        outSlope: 0.17500001
+        inSlope: 0.25
+        outSlope: 0.25
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 2
-        value: 0.85
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -164,10 +164,10 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  BulletVelocity: 1.7
-  RotationSpeed: 9
+  BulletVelocity: 2
+  RotationSpeed: 13.5
   RestrictRotation: 0
-  <Damage>k__BackingField: 3
+  <Damage>k__BackingField: 3.5
   DamageMultiplier:
     Values:
       serializedVersion: 2
@@ -217,41 +217,41 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
+        inSlope: 43.359936
+        outSlope: 43.359936
+        tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.33333334
+        outWeight: 0.48953977
       - serializedVersion: 3
         time: 1
         value: 50
-        inSlope: 67.5
-        outSlope: 67.5
+        inSlope: 47.5
+        outSlope: 47.5
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 2
-        value: 135
-        inSlope: 100
-        outSlope: 100
+        value: 95
+        inSlope: 55
+        outSlope: 55
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 3
-        value: 250
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
+        value: 160
+        inSlope: 67.74308
+        outSlope: 67.74308
+        tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
+        inWeight: 0.4644351
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
   Element: 2
-  ElementTime: 2
+  ElementTime: 2.25
